@@ -17,6 +17,9 @@ import SidebarLayout from "../SIdebar/Sidebarlayout";
 import Upcoming from "../Seller/Upcoming";
 import Newuser from "../Seller/newuser";
 import { QueryClient, QueryClientProvider } from 'react-query';
+import AdCompleted from "../Admin/Completed";
+import AdDelivery from "../Admin/Delivery";
+import AdUpcoming from "../Admin/Upcoming";
 const queryClient = new QueryClient()
 const Routing =()=>{
   return(
@@ -29,6 +32,9 @@ const Routing =()=>{
         <Route exact path="/completed" element={<Completed/>}></Route>
         <Route exact path="/delivery" element={<Delivery/>}></Route>
         <Route exact path="/upcoming" element={<Upcoming/>}></Route>
+        <Route exact path="/adcompleted" element={<AdCompleted/>}></Route>
+        <Route exact path="/addelivery" element={<AdDelivery/>}></Route>
+        <Route exact path="/adupcoming" element={<AdUpcoming/>}></Route>
         </Route>
         
         <Route exact path="/" element={<App />}></Route>

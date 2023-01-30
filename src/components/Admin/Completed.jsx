@@ -59,8 +59,8 @@ import {
 //         </div>
 //          <div class=" leading-7 text-left text-sm font-thin mt-2 w-4/5 mx-auto" id="submenu">
 //           <h1 class="cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-1">Delivery Record</h1>
-//           <h1 class="cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-1">Delivery Record</h1>
-//           <h1 class="cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-1">Delivery Record</h1>
+//           <h1 class="cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-1">AdCompleted Record</h1>
+//           <h1 class="cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-1">Upcoming Record</h1>
 //         </div>
 //         {/* <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer  hover:bg-blue-600">
 //           <SiBookstack/>
@@ -87,15 +87,95 @@ import {
 
 
 
-const Delivery = () => {
+const AdCompleted = () => {
   const [showModal, setShowModal] = useState(false);
   return (
     <div class="block w-[100%] overflow-x-auto mt-20">
       <div className="mt-1 flex justify-between">
-        <p className="ml-10 text-xl font-sans" >Delivery Records</p>
+        <p className="ml-10 text-xl font-sans" >Completed Records</p>
         <div>
-      
+        <button className="px-2 py-2 bg-[#171717] text-white text-xs rounded-md mr-10" onClick={() => setShowModal(true)} >New Dispatch</button></div>
+        {showModal ?(<div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-[5000] outline-none  backdrop-blur-sm backdrop-contrast-50 backdrop-brightness-50 transition duration-100 focus:outline-none">
+      <div className="relative w-full my-6 mx-auto max-w-3xl">
+        <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+          <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
+            <h3 className="text-3xl font=semibold text-black">
+              Edit Department Master Details
+            </h3>
+            <button
+              className="bg-transparent border-0 text-black float-right"
+              onClick={() =>setShowModal(false)}
+            >
+              <span className="text-black opacity-7 h-6 w-6 text-xl block rounded-full">
+                <AiFillCloseCircle onClick={() =>setShowModal(false)} />
+              </span>
+            </button>
+          </div>
+          <div className="relative p-6 flex-auto">
+            <form className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full">
+              <label className="block text-black text-sm font-bold mb-1">
+                Plant Code
+              </label>
+              <select
+                className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+               
+              >
+                <option selected>
+                  ---------------- Select Below Option ------------------
+                </option>
+                
+                
+              </select>
+              <label className="block text-black text-sm font-bold mb-1">
+                Department Code
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                
+              />
+              <label className="block text-black text-sm font-bold mb-1">
+                Department Name
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+              
+               
+              />
+              <label className="block text-black text-sm font-bold mb-1">
+                Status
+              </label>
+              <select
+                className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                
+              
+              >
+                <option selected>
+                  ---------------- Select Below Option ------------------
+                </option>
+                <option>Active</option>
+                <option>Inactive</option>
+              </select>
+            </form>
+          </div>
+          <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+            <button
+              className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+              type="button"
+              onClick={() =>setShowModal(false)}
+            >
+              Close
+            </button>
+            <button
+              className="text-white bg-[#175eab] active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+              type="button"
+            
+            >
+              Save
+            </button>
+          </div>
+        </div>
       </div>
+    </div>):null}
       </div>
     <table class="items-center mt-5 bg-transparent w-full border-collapse ">
       <thead className="bg-gray-800 text-white">
@@ -137,4 +217,4 @@ const Delivery = () => {
   );
 };
 
-export default Delivery;
+export default AdCompleted;

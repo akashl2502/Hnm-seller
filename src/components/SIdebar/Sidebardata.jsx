@@ -10,19 +10,19 @@ export const AdminbarData = [
   },
   {
     title: "Upcoming Records",
-    path: "/upcoming",
+    path: "/adupcoming",
     icon: <IoIcons.IoIosPaper />,
     cName: "nav-text",
   },
   {
     title: "Inprogress Records",
-    path: "/delivery",
+    path: "/addelivery",
     icon: <FaIcons.FaCartPlus />,
     cName: "nav-text",
   },
   {
     title: "Completed Records",
-    path: "/completed",
+    path: "/adcompleted",
     icon: <IoIcons.IoMdPeople />,
     cName: "nav-text",
   },

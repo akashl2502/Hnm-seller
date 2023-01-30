@@ -70,7 +70,7 @@ const Sidebar = () => {
           </div>
           <ul class="flex items-center">
             <li>
-              <div class="section2 full-height mr-6">
+              <div class="section2  mr-6">
                 <input
                   class="modal-btn "
                   type="checkbox"
@@ -293,7 +293,7 @@ const Sidebar = () => {
               </div>
             </li>
             <li>
-              <div class="section1 full-height">
+              <div class="section1">
                 <input
                   class="modal-btn2"
                   type="checkbox"
@@ -363,9 +363,7 @@ const Sidebar = () => {
                   </div>
                 </div>
 
-                <a href="https://front.codes/" class="logo" target="_blank">
-                  <img src="https://assets.codepen.io/1462889/fcy.png" alt="" />
-                </a>
+               
               </div>
               {/* <button
           
