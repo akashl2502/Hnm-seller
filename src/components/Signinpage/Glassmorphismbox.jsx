@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { loadFull } from "tsparticles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import Tilt from "react-parallax-tilt";
 import { UilEnvelopeOpen } from "@iconscout/react-unicons";
 import { UilKeySkeleton } from "@iconscout/react-unicons";
@@ -31,7 +31,11 @@ import {
 import { async } from "@firebase/util";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useFirestoreQuery } from "@react-query-firebase/firestore";
-import { adminref, sellerref } from "../../Serverquery/Firebaseref";
+import {
+  adminref,
+  Masteruserdetails,
+  sellerref,
+} from "../../Serverquery/Firebaseref";
 import { Globaltoast, LS } from "../../constants/Reusedfunctopn";
 const Glassmorphismbox = () => {
   const [change, setChange] = useState(false);
@@ -110,7 +114,7 @@ const Glassmorphismbox = () => {
       Authentication
     );
   };
-
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////
   const verifyOTP = (e) => {
     // let otp = e.target.value;
     // setOTP(otp);
@@ -128,12 +132,28 @@ const Glassmorphismbox = () => {
           LS.save("uid", user);
           LS.save("LB", true);
           LS.save("US", "seller");
-          navigate("/sellerhome");
+          var userdata = {};
+          // var a = Masteruserdetails.docs.map((docSnapshot) => {
+          //   const data = { ...docSnapshot.data(), id: docSnapshot.id };
+          //   return data;
+          // });
+          //navigate("/newuser");
+          // navigate({
+          //   pathname: "/newuser",
+          //   search: createSearchParams({ uid: user }).toString,
+          // });
+          navigate({
+            pathname: "../newuser",
+            search: createSearchParams({
+              uid: user,
+            }).toString(),
+          });
         })
         .catch((error) => {
-          toastId.error("Invalid Otp Please Try again ", {
-            id: toastId,
-          });
+          console.log(error);
+          if (error instanceof FirebaseError) {
+            toastId.error(error.code, { id: toastId });
+          }
           //setload(false);
           // Toastdata({ data: "Error While Sending Otp" });
         });
@@ -170,33 +190,11 @@ const Glassmorphismbox = () => {
     }
   };
 
-  const Onclick = () => {
+  const Onclick = (e) => {
+    e.preventDefault();
     requestOTP();
   };
-  const Errorfire = (e) => {
-    switch (e.code) {
-      case "ERROR_INVALID_EMAIL":
-        return "Your email address appears to be malformed.";
-        break;
-      case "ERROR_WRONG_PASSWORD":
-        return "Your password is wrong.";
-        break;
-      case "ERROR_USER_NOT_FOUND":
-        return "User with this email doesn't exist.";
-        break;
-      case "ERROR_USER_DISABLED":
-        return "User with this email has been disabled.";
-        break;
-      case "ERROR_TOO_MANY_REQUESTS":
-        return "Too many requests. Try again later.";
-        break;
-      case "ERROR_OPERATION_NOT_ALLOWED":
-        return "Signing in with Email and Password is not enabled.";
-        break;
-      default:
-        return "An undefined Error happened.";
-    }
-  };
+
   const Masterlogin = () => {
     var check = Admindata.find((data) => data.email == Email);
     if (Email.length != 0 && Pass.length != 0) {
@@ -433,7 +431,10 @@ const Glassmorphismbox = () => {
                             <a
                               href="#"
                               class="btn mt-7"
-                              onClick={() => verifyOTP(OTP)}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                verifyOTP(OTP);
+                              }}
                             >
                               Verify Otp
                             </a>

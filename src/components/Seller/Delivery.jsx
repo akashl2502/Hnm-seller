@@ -93,9 +93,7 @@ const Delivery = () => {
     <div class="block w-[100%] overflow-x-auto mt-20">
       <div className="mt-1 flex justify-between">
         <p className="ml-10 text-xl font-sans" >Delivery Records</p>
-        <div>
-      
-      </div>
+        
       </div>
     <table class="items-center mt-5 bg-transparent w-full border-collapse ">
       <thead className="bg-gray-800 text-white">
