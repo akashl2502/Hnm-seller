@@ -4,7 +4,7 @@ import Routing from './components/Routing/Route'
 import { QueryClient, QueryClientProvider } from 'react-query';
 const queryClient = new QueryClient()
 root.render(
-     <BrowserRouter>
+     <BrowserRouter >
         <Routing/>
      </BrowserRouter>
 );

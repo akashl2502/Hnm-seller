@@ -161,6 +161,7 @@ const Glassmorphismbox = () => {
     }
   };
   const requestOTP = (e) => {
+    e.preventDefault();
     var check = Userdata.find((data) => `+91${data.number}` == phoneNumber);
     console.log(check);
     if (phoneNumber.length >= 12) {
@@ -192,7 +193,7 @@ const Glassmorphismbox = () => {
 
   const Onclick = (e) => {
     e.preventDefault();
-    requestOTP();
+    requestOTP(e);
   };
 
   const Masterlogin = () => {
@@ -447,7 +448,7 @@ const Glassmorphismbox = () => {
                           href="#"
                           type="submit"
                           class={`${change ? "hidden" : "btn mt-7 "}`}
-                          onClick={() => Onclick()}
+                          onClick={(e) => Onclick(e)}
                         >
                           Request Otp
                         </a>

@@ -24,8 +24,8 @@ const queryClient = new QueryClient()
 const Routing =()=>{
   return(
     <QueryClientProvider client={queryClient}>
-    <Router>
-      <Routes>
+    <Router forceRefresh={true} >
+      <Routes >
         <Route element={<SidebarLayout/>}>
         <Route path="/sellerhome" element={<Sellerhome/>}/>
         <Route exact path="/admin" element={<Admin/>}/>
