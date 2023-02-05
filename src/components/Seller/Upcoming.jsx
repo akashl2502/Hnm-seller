@@ -5,6 +5,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { MdDeleteForever } from "react-icons/md";
 import {
   addDoc,
+  deleteDoc,
+  doc,
   getDoc,
   getDocs,
   onSnapshot,
@@ -18,16 +20,29 @@ import axios from "axios";
 import { Globaltoast, LS } from "../../constants/Reusedfunctopn";
 import { Orderdetails } from "../../Serverquery/Firebaseref";
 import { useEffect } from "react";
-import { data } from "autoprefixer";
 import {
   useFirestoreQuery,
   useFirestoreQueryData,
 } from "@react-query-firebase/firestore";
+import { Db } from "../../Firebase/Firebase-Config";
+import { AiFillDelete } from "react-icons/ai";
 
-const Upcoming = () => {
-  console.log("hai");
+function Upcoming() {
+  var uid = LS.get("uid");
+  var a = query(
+    Orderdetails,
+    where("uid", "==", uid),
+    where("status", "==", 0)
+  );
+
+  const {
+    data: seller,
+    isLoading: isloading,
+    isError: error,
+    refetch,
+  } = useFirestoreQuery(["ordertails_user"], a, { subscribe: true }, {});
   const today = moment().format("YYYY-MM-DD");
-
+  const [Docid, Setdocid] = useState();
   const [OD, SetOD] = useState({
     dor: today,
     product: "",
@@ -44,39 +59,11 @@ const Upcoming = () => {
   const [showModal, setShowModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [Updata, Setupdata] = useState([]);
-  var uid = LS.get("uid");
-  var a = query(
-    Orderdetails,
-    where("uid", "==", uid),
-    where("status", "==", 0)
-  );
-
-  const {
-    data: seller,
-    isLoading: isloading,
-    isError: error,
-  } = useFirestoreQuery(
-    ["ordertails"],
-    a,
-    { subscribe: true },
-    {
-      onloadedmetadata: (snapshot) => {},
-      onSuccess: (snapshot) => {
-        var product = [];
-        var a = snapshot.docs.map((docSnapshot) => {
-          product.push({ ...docSnapshot.data(), id: docSnapshot.id });
-          return data;
-        });
-        Setupdata(product);
-      },
-    }
-  );
 
   useEffect(() => {
     toastid.dismiss();
     // Getdata();
   }, []);
-
   // const Getdata = async () => {
   //   var uid = LS.get("uid");
   //   var a = query(
@@ -171,9 +158,64 @@ const Upcoming = () => {
       }
     }
   };
+  const Editrequest = async (e) => {
+    e.preventDefault();
+    if (
+      OD.city.length != 0 &&
+      OD.dod.length != 0 &&
+      OD.dor.length != 0 &&
+      OD.pincode.length != 0 &&
+      OD.product.length != 0 &&
+      OD.quantity.length != 0 &&
+      OD.region.length != 0
+    ) {
+      toastid.loading("Editing Request Please Wait .......", { id: toastid });
+      const docRef = doc(Db, "orderdetails", Docid);
+      await updateDoc(docRef, OD)
+        .then((res) => {
+          toastid.success("Data Successfully Edited", { id: toastid });
+          setEditModal(false);
+          Setdocid("");
+          SetOD({
+            dor: today,
+            product: "",
+            quantity: "",
+            dod: "",
+            pincode: "",
+            city: "",
+            region: "",
+            status: 0,
+            uid: LS.get("uid"),
+          });
+        })
+        .catch((err) => {
+          toastid.success("Error While Editing Data", { id: toastid });
+          setEditModal(false);
+          console.log(err);
+        });
+    } else {
+      if (OD.city.length == 0) {
+        toastid.error("Please Check Pincode", { id: toastid });
+      } else if (OD.dod.length == 0) {
+        toastid.error("Please Enter Date Of Dispatch", { id: toastid });
+      } else if (OD.pincode.length == 0) {
+        toastid.error("Please Enter Pincode", { id: toastid });
+      } else if (OD.product.length == 0) {
+        toastid.error("Please Enter Product Details", { id: toastid });
+      } else if (OD.quantity.length == 0) {
+        toastid.error("Please Enter the Quantity Of Product", { id: toastid });
+      } else if (OD.region.length == 0) {
+        toastid.error("Please Check pincode", { id: toastid });
+      }
+    }
+  };
   if (isloading) {
     return <h1>Loading</h1>;
   }
+  var product = [];
+  var a = seller.docs.map((docSnapshot) => {
+    product.push({ ...docSnapshot.data(), id: docSnapshot.id });
+  });
   return (
     <div class="block w-[100%] overflow-x-auto mt-20">
       <div className="mt-1 flex justify-between">
@@ -302,7 +344,7 @@ const Upcoming = () => {
                       className="shadow appearance-none border rounded w-full py-1 px-1 text-black"
                       defaultValue={OD.product}
                       onChange={(e) => {
-                        SetOD({ ...OD, product: e.target.value });
+                        SetOD({ ...OD, product: e.target.value.toUpperCase() });
                       }}
                     />
                     <label className="block text-black text-sm font-bold mb-1">
@@ -359,8 +401,11 @@ const Upcoming = () => {
                   <button
                     className="text-white bg-[#175eab] active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     type="button"
+                    onClick={(e) => {
+                      Editrequest(e);
+                    }}
                   >
-                    Save
+                    Edit
                   </button>
                 </div>
               </div>
@@ -397,60 +442,80 @@ const Upcoming = () => {
         </thead>
 
         <tbody>
-          {Updata &&
-            Updata.map((data, index) => {
-              console.log(data);
-              return (
-                <tr key={index}>
-                  <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {index + 1}
-                  </td>
-                  <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {data.dor}
-                  </td>
-                  <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {data.product}
-                  </td>
-                  <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {data.quantity}
-                  </td>
-                  <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {data.dod}
-                  </td>
-                  <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {`${data.pincode} , ${data.city}`}
-                  </td>
-                  <td>
-                    <div className="flex justify-center items-center mr-10">
-                      <FiEdit
-                        onClick={(e) => {
-                          SetOD({
-                            dor: data.dor,
-                            product: data.product,
-                            quantity: data.quantity,
-                            dod: data.dod,
-                            pincode: data.pincode,
-                            city: data.city,
-                            region: data.region,
-                            status: data.status,
-                            uid: data.uid,
+          {product.map((data, index) => {
+            return (
+              <tr key={index}>
+                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                  {index + 1}
+                </td>
+                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                  {data.dor}
+                </td>
+                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                  {data.product}
+                </td>
+                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                  {data.quantity}
+                </td>
+                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                  {data.dod}
+                </td>
+                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                  {`${data.pincode} , ${data.city} ,${data.region}`}
+                </td>
+                <td>
+                  <div className="flex justify-center items-center mr-10 ">
+                    <FiEdit
+                      onClick={(e) => {
+                        SetOD({
+                          dor: data.dor,
+                          product: data.product,
+                          quantity: data.quantity,
+                          dod: data.dod,
+                          pincode: data.pincode,
+                          city: data.city,
+                          region: data.region,
+                          status: data.status,
+                          uid: data.uid,
+                        });
+                        Setcity(`${data.city} , ${data.region}`);
+                        setEditModal(true);
+                        Setdocid(data.id);
+                      }}
+                      color="blue"
+                      title="Edit"
+                    />
+                    <AiFillDelete
+                      onClick={async (e) => {
+                        const docRef = doc(Db, "orderdetails", data.id);
+                        await deleteDoc(docRef)
+                          .then((res) => {
+                            toastid.success(
+                              "New Request Successfully Removed",
+                              {
+                                id: toastid,
+                              }
+                            );
+                          })
+                          .catch((res) => {
+                            toastid.error("Request Cannot Be Removed", {
+                              id: toastid,
+                            });
                           });
-                          Setcity(`${data.city} , ${data.region}`);
-                          setEditModal(true);
-                        }}
-                        color="blue"
-                        title="Edit"
-                      />
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
+                      }}
+                      color="red"
+                      title="Delete"
+                    />
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <Toaster position="bottom-center" reverseOrder={false} />
     </div>
   );
-};
+}
 
 export default Upcoming;
