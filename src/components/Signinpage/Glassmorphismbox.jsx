@@ -40,18 +40,6 @@ import { Globaltoast, LS } from "../../constants/Reusedfunctopn";
 const Glassmorphismbox = () => {
   const [change, setChange] = useState(false);
   const [OTP, setOTP] = useState("");
-
-  //   const particlesInit = useCallback(async engine => {
-  //     console.log(engine);
-  //     // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
-  //     // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-  //     // starting from v2 you can add only the features you need reducing the bundle size
-  //     await loadFull(engine);
-  // }, []);
-
-  // const particlesLoaded = useCallback(async container => {
-  //   console.log(container);
-  // }, []);
   const [Loading, Setloading] = useState(false);
   const [Email, Setemail] = useState("");
   const [Pass, Setpass] = useState("");
@@ -237,59 +225,16 @@ const Glassmorphismbox = () => {
   }
 
   return (
-    // <div className=" h-screen w-screen relative overflow-hidden flex justify-center items-center">
-    //   <div className="h-40-r w-40-r bg-gradient-to-r from-green-400 to-blue-500 rounded-full absolute left-2/3 -top-56 transform rotate-160 animate-pulse"></div>
-    //   <div className="h-35-r w-35-r bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-full absolute top-96 -left-20 transform rotate-180 animate-pulse"></div>
-    //   <Tilt>
-    //     <div class="w-96 shadow-2xl shadow-slate-900 mx-auto text-white bg-clip-padding backdrop-filter bg-white bg-opacity-10 backdrop-blur-md mt-20 py-10 px-8 rounded-md relative bottom-7">
-    //       <div class="text-center text-2xl">Login</div>
-    //       <form class="mt-6">
-    //         <div class="mb-4">
-    //           <label for="email">Email</label>
-    //           <input
-    //             id="email"
-    //             type="email"
-    //             class="bg-white  bg-opacity-10 hover:bg-opacity-20 transition duration-500 shadow-inner shadow-slate-600/90 rounded-md p-3 outline-none w-full"
-    //           />
-    //         </div>
-    //         <div class="mb-4">
-    //           <label for="password">Password</label>
-    //           <input
-    //             id="password"
-    //             type="password"
-    //             class="bg-white bg-opacity-10 hover:bg-opacity-20 transition duration-500 shadow-inner shadow-slate-600/90 rounded-md p-3 outline-none w-full"
-    //           />
-    //         </div>
-    //         <button class="mt-1 text-primary bg-blue-gradient  bg-opacity-30 hover:bg-opacity-40 transition duration-500 rounded-md shadow-md shadow-slate-600/70 p-3 w-full font-semibold">
-    //           Login
-    //         </button>
-    //         <div class="text-center my-4">or</div>
-    //         <div class="flex place-content-evenly">
-    //           <button
-    //             onClick={() => {
-    //               navigate(`/signup`);
-    //             }}
-    //             class="mt-1 text-primary bg-blue-gradient bg-opacity-30 hover:bg-opacity-40 transition duration-500 rounded-md shadow-md shadow-slate-600/70 p-3 w-full font-semibold"
-    //           >
-    //             Sign Up
-    //           </button>
-    //         </div>
-    //       </form>
-    //       <div class="text-center pt-4 text-sm">Forgot a password?</div>
-    //     </div>
-    //   </Tilt>
-    // </div>
-
     <div class="flex justify-center items-center">
       <div class="row full-height justify-content-center">
         <div class="col-12 text-center align-self-center py-5">
-          <div class="section pb-5 pt-6 pt-sm-2 text-center">
+          <div class="section pb-5  pt-sm-2 text-center">
             <h6 class="mb-0 pb-3 text-white">
               <span>Admin </span>
               <span>Seller</span>
             </h6>
             <input
-              class="checkbox"
+              class="checkbox hidden"
               type="checkbox"
               id="reg-log"
               name="reg-log"
@@ -367,8 +312,7 @@ const Glassmorphismbox = () => {
                         class="btn mt-5"
                         onClick={() => {
                           Masterlogin();
-                        }}
-                      >
+                        }}>
                         submit
                       </a>
 
@@ -435,8 +379,7 @@ const Glassmorphismbox = () => {
                               onClick={(e) => {
                                 e.preventDefault();
                                 verifyOTP(OTP);
-                              }}
-                            >
+                              }}>
                               Verify Otp
                             </a>
                           </div>
@@ -448,8 +391,7 @@ const Glassmorphismbox = () => {
                           href="#"
                           type="submit"
                           class={`${change ? "hidden" : "btn mt-7 "}`}
-                          onClick={(e) => Onclick(e)}
-                        >
+                          onClick={(e) => Onclick(e)}>
                           Request Otp
                         </a>
                       </form>

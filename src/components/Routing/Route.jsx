@@ -20,6 +20,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import AdCompleted from "../Admin/Completed";
 import AdDelivery from "../Admin/Delivery";
 import AdUpcoming from "../Admin/Upcoming";
+import Adduser from "../Admin/Adduser";
 const queryClient = new QueryClient()
 const Routing =()=>{
   return(
@@ -35,6 +36,7 @@ const Routing =()=>{
         <Route exact path="/adcompleted" element={<AdCompleted/>}></Route>
         <Route exact path="/addelivery" element={<AdDelivery/>}></Route>
         <Route exact path="/adupcoming" element={<AdUpcoming/>}></Route>
+        <Route exact path="/aduser" element={<Adduser/>}></Route>
         </Route>
         
         <Route exact path="/" element={<App />}></Route>
@@ -48,6 +50,8 @@ const Routing =()=>{
         <Route exact path="/master" element={<Master/>}></Route>
         <Route exact path="/addmobile" element={<Addmobile/>}></Route>
         <Route exact path="/newuser" element={<Newuser/>}></Route>
+       
+
       </Routes>
     </Router>
     </QueryClientProvider>

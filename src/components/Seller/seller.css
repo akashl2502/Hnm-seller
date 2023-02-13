@@ -1,57 +1,58 @@
-
-.image{
-   height: 100vh;
-   width: 100vw;
-   background-position: center;
-   background-size: cover;
-   background-repeat: no-repeat;
-   background-image: radial-gradient(100% 316.05% at 0% 0%, #082f4b 0%, #000305 100%);
+.image {
+  height: 100vh;
+  width: 100vw;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: radial-gradient(
+    100% 316.05% at 0% 0%,
+    #082f4b 0%,
+    #000305 100%
+  );
 }
 
 .collapsible {
-   background-color: #eee;
-   color: #444;
-   cursor: pointer;
-   padding: 18px;
-   width: 100%;
-   border: none;
-   text-align: left;
-   outline: none;
-   font-size: 15px;
- }
- 
- 
- .active, .collapsible:hover {
-   background-color: #ccc;
- }
- 
- 
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active,
+.collapsible:hover {
+  background-color: #ccc;
+}
 
 .cell-1 {
-border-collapse: separate;
-border-spacing: 0 4em;
-background: #ffffff;
-border-bottom: 5px solid transparent;
-background-clip: padding-box;
-cursor: pointer
+  border-collapse: separate;
+  border-spacing: 0 4em;
+  background: #ffffff;
+  border-bottom: 5px solid transparent;
+  background-clip: padding-box;
+  cursor: pointer;
 }
 thead {
-background: #dddcdc
+  background: #dddcdc;
 }
 .table-elipse {
-cursor: pointer
+  cursor: pointer;
 }
 #demo {
--webkit-transition: all 0.3s ease-in-out;
--moz-transition: all 0.3s ease-in-out;
--o-transition: all 0.3s 0.1s ease-in-out;
-transition: all 0.3s ease-in-out
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s 0.1s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 .row-child {
-background-color: #000;
-color: #fff
+  background-color: #000;
+  color: #fff;
 }
- .section3{
+.section3 {
   position: relative;
   width: 100%;
   display: block;
@@ -62,19 +63,19 @@ color: #fff
   -ms-flex-pack: center;
   justify-content: center;
 }
-.full-height{
+.full-height {
   min-height: 100vh;
 }
 
-[type="checkbox"]:checked,
-[type="checkbox"]:not(:checked){
+/* [type="checkbox"]:checked,
+[type="checkbox"]:not(:checked) {
   position: absolute;
   left: -9999px;
-}
+} */
 .modal-btn3:checked + label,
-.modal-btn3:not(:checked) + label{
+.modal-btn3:not(:checked) + label {
   position: relative;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 15px;
   line-height: 2;
@@ -82,7 +83,7 @@ color: #fff
   transition: all 200ms linear;
   border-radius: 4px;
   width: 140px;
-  
+
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -96,27 +97,26 @@ color: #fff
   justify-content: center;
   -ms-flex-pack: center;
   text-align: center;
-    -ms-flex-item-align: center;
-    align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
   border: none;
   cursor: pointer;
   background-color: #102770;
   color: white;
-  box-shadow: 0 12px 35px 0 rgba(16,39,112,.25);
+  box-shadow: 0 12px 35px 0 rgba(16, 39, 112, 0.25);
 }
-.modal-btn3:not(:checked) + label:hover{
+.modal-btn3:not(:checked) + label:hover {
   background: url("https://www.shutterstock.com/image-vector/grunge-letter-x-cross-sign-600w-1696758415.jpg");
   color: #102770;
-
 }
 .modal-btn3:checked + label .uil,
-.modal-btn3:not(:checked) + label .uil{
-	margin-left: 10px;
+.modal-btn3:not(:checked) + label .uil {
+  margin-left: 10px;
   background: url("https://www.shutterstock.com/image-vector/grunge-letter-x-cross-sign-600w-1696758415.jpg");
-	font-size: 18px;
+  font-size: 18px;
 }
 .modal-btn3:checked + label:after,
-.modal-btn3:not(:checked) + label:after{
+.modal-btn3:not(:checked) + label:after {
   position: fixed;
   top: 30px;
   right: 30px;
@@ -129,26 +129,27 @@ color: #fff
   font-size: 18px;
   background-color: #ffeba7;
   color: #102770;
-  font-family: 'unicons';
-  content: '\274C'; 
-  box-shadow: 0 12px 25px 0 rgba(16,39,112,.25);
+  font-family: "unicons";
+  content: "\274C";
+  box-shadow: 0 12px 25px 0 rgba(16, 39, 112, 0.25);
   transition: all 200ms linear;
   opacity: 0;
   pointer-events: none;
   transform: translateY(20px);
 }
 .modal-btn3:checked + label:hover:after,
-.modal-btn3:not(:checked) + label:hover:after{
+.modal-btn3:not(:checked) + label:hover:after {
   background-color: #102770;
   color: #ffeba7;
 }
-.modal-btn3:checked + label:after{
-  transition: opacity 300ms 300ms ease, transform 300ms 300ms ease, background-color 250ms linear, color 250ms linear;
+.modal-btn3:checked + label:after {
+  transition: opacity 300ms 300ms ease, transform 300ms 300ms ease,
+    background-color 250ms linear, color 250ms linear;
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
 }
-.modal{
+.modal {
   position: fixed;
   display: block;
   display: -ms-flexbox;
@@ -165,19 +166,19 @@ color: #fff
   height: 100%;
   z-index: 100;
   overflow-x: hidden;
-  background-color: rgba(31,32,41,.75);
+  background-color: rgba(31, 32, 41, 0.75);
   pointer-events: none;
   opacity: 0;
   transition: opacity 250ms 700ms ease;
 }
-.modal-btn3:checked ~ .modal{
+.modal-btn3:checked ~ .modal {
   pointer-events: auto;
   opacity: 1;
   transition: all 300ms ease-in-out;
 }
 
 .user {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -265,7 +266,6 @@ color: #fff
   font-weight: 800;
   font-size: 1.5rem;
   letter-spacing: 2px;
-  
 }
 
 .text-input {
@@ -275,7 +275,7 @@ color: #fff
   width: 100%;
   align-items: center;
   border-radius: 10px;
-  
+
   padding: 0 15px;
   margin: 5px 0;
 }
@@ -293,11 +293,10 @@ color: #fff
   color: #686868;
 }
 
-.login label{
+.login label {
   font-weight: 200;
   font-size: 0.8rem;
 }
-
 
 .text-input1 {
   background: #e6e6e6;
@@ -306,7 +305,7 @@ color: #fff
   width: 100%;
   align-items: center;
   border-radius: 10px;
-  
+
   padding: 0 15px;
   margin: 5px 0;
 }
@@ -363,39 +362,30 @@ a.forgot {
   color: #9a9a9a;
   margin-left: 10px;
 }
-.media{
+.media {
   width: 100%;
   position: relative;
   margin-top: 2.5rem;
   right: 2.5rem;
-  
-
 }
 
 @media (min-width: 1000px) {
   .container {
-      grid-template-columns: 50% 50%;
-      grid-template-areas: "design login";
+    grid-template-columns: 50% 50%;
+    grid-template-areas: "design login";
   }
 
   .design {
-      display: block;
+    display: block;
   }
-
-
-  
-
-  
 }
 
 @media only screen and (max-width: 1000px) {
-  .media{
+  .media {
     width: 100%;
     position: relative;
     margin-top: 2.5rem;
     right: 0rem;
-    
-  
   }
   .login h3.title {
     position: absolute;
@@ -406,5 +396,3 @@ a.forgot {
     left: 5rem;
   }
 }
-
-
