@@ -87,7 +87,7 @@ const Sidebar = () => {
   };
   useEffect(() => {
     console.log(LS.get("US"));
-    var type = LS.get("US") || "Admin";
+    var type = LS.get("US") || "seller";
     if (type == "Admin") {
       Setsidebardata(AdminbarData);
     } else {

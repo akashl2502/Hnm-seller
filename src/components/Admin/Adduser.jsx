@@ -8,6 +8,14 @@ const Adduser = () => {
     Read: false,
     Write: false,
   });
+
+  const [Addnew, Setaddnew] = useState({
+    name: "",
+    email: "",
+    EP: [false, false],
+    RP: [false, false, false, false, false],
+    status: true,
+  });
   return (
     <div class="block w-[100%] overflow-x-auto mt-20">
       <div className="flex justify-between w-[95%]   p-5  ">
@@ -40,18 +48,21 @@ const Adduser = () => {
                     <label className="block text-black text-sm font-bold mb-1">
                       Name
                     </label>
-                    <input className="shadow appearance-none border rounded w-full py-1 px-1 text-black" />
+                    <input
+                      className="shadow appearance-none border rounded w-full py-1 px-1 text-black"
+                      onChange={(e) => {
+                        Setaddnew({ ...Addnew, name: e.target.value });
+                      }}
+                    />
                     <label className="block text-black text-sm font-bold mb-1">
                       Email Id
                     </label>
                     <input
                       className="shadow appearance-none border rounded w-full py-1 px-1 text-black"
-                      type="number"
+                      onChange={(e) => {
+                        Setaddnew({ ...Addnew, email: e.target.value });
+                      }}
                     />
-                    <label className="block text-black text-sm font-bold mb-1">
-                      Password
-                    </label>
-                    <input className="shadow appearance-none border rounded w-full py-1 px-1 text-black" />
                     <div className="flex justify-between mt-5">
                       <label className="block text-black text-sm font-bold mb-1">
                         Edit Permissions
@@ -59,19 +70,17 @@ const Adduser = () => {
                       <div className="flex gap-3">
                         <input
                           type={"radio"}
-                          checked={Radio.Read}
+                          checked={Addnew.EP[0]}
                           onChange={(e) => {
-                            console.log(e.target.value);
-                            Setradio({ Write: false, Read: true });
+                            Setaddnew({ ...Addnew, EP: [true, false] });
                           }}
                         />
                         <label>Read</label>
                         <input
                           type={"radio"}
-                          checked={Radio.Write}
+                          checked={Addnew.EP[1]}
                           onChange={(e) => {
-                            console.log(e.target.value);
-                            Setradio({ Write: true, Read: false });
+                            Setaddnew({ ...Addnew, EP: [false, true] });
                           }}
                         />
                         <label>Write</label>
@@ -84,23 +93,33 @@ const Adduser = () => {
                     <div className="flex w-full justify-between mt-6 smalldevice">
                       <div>
                         <p>Date Of Requests</p>
-                        <input type="checkbox" />
+                        <input
+                          type="checkbox"
+                          checked={Addnew.RP[0]}
+                          onChange={(e) => {
+                            var a = Addnew.RP;
+                            console.log(a);
+                            a[0] = !a[0];
+                            console.log(a);
+                            Setaddnew({ ...Addnew, RP: a });
+                          }}
+                        />
                       </div>
                       <div>
                         <p>Product</p>
-                        <input type="checkbox" />
+                        <input type="checkbox" checked={Addnew.RP[0]} />
                       </div>
                       <div>
                         <p>Quantity</p>
-                        <input type="checkbox" />
+                        <input type="checkbox" checked={Addnew.RP[1]} />
                       </div>
                       <div>
                         <p>Date Of Dispatch</p>
-                        <input type="checkbox" />
+                        <input type="checkbox" checked={Addnew.RP[2]} />
                       </div>
                       <div>
                         <p>Pincode , City</p>
-                        <input type="checkbox" />
+                        <input type="checkbox" checked={Addnew.RP[3]} />
                       </div>
                     </div>
                   </form>
