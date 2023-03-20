@@ -396,3 +396,49 @@ a.forgot {
     left: 5rem;
   }
 }
+
+.home {
+  background-color:hsla(0,0%,100%,1);
+  background-image:
+  radial-gradient(at 0% 99%, hsla(64,100%,70%,0.31) 0px, transparent 50%),
+  radial-gradient(at 98% 99%, hsla(231,100%,76%,0.59) 0px, transparent 50%),
+  radial-gradient(at 10% 61%, hsla(343,100%,76%,0.33) 0px, transparent 50%);
+
+}
+
+.home2{
+  background-color: hsla(113, 0%, 100%, 1);
+  background-image:
+  radial-gradient(at 50% 55%, hsla(173,88%,78%,0.35) 0px, transparent 50%),
+  radial-gradient(at 75% 54%, hsla(240,100%,70%,0.18) 0px, transparent 50%),
+  radial-gradient(at 30% 52%, hsla(343,100%,76%,0.33) 0px, transparent 50%);
+}
+
+.home1 {
+  background: url("https://media.istockphoto.com/id/1308375221/photo/black-metal-steel-plate-and-metallic-texture-on-dark-background-with-shiny-pattern-stainless.jpg?b=1&s=170667a&w=0&k=20&c=Yqivk9lbxy_PWa-G49-zA7KFT5FdNOC8fXXrsu0bU2Y="),
+    center;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.17);
+
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.3px);
+  -webkit-backdrop-filter: blur(3.3px);
+  border: 1px solid rgba(255, 255, 255, 0.31);
+}
+
+.box{
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+
+
+
+@media screen and (max-width: 490px) {
+  .glass {
+    height: 500px;
+  }
+}
