@@ -571,9 +571,9 @@ const Sidebar = () => {
                 {showModal ? (
                   <>
                     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed backdrop-blur-3xl inset-0 z-50 outline-none focus:outline-none">
-                      <div className="relative z-50 w-auto my-6 mx-auto max-w-3xl">
+                      <div className="relative z-50  w-auto my-6 mx-auto max-w-3xl">
                         {/*content*/}
-                        <div className="border-0 h-[500px] rounded-lg  shadow-lg relative flex flex-col w-full z-50 bg-white outline-none focus:outline-none">
+                        <div className="border-0 h-[500px]  rounded-lg  shadow-lg relative flex flex-col w-full z-50 bg-white outline-none focus:outline-none">
                           {/*header*/}
                           <div className="flex items-start bg-black text-white tracking-wide justify-between p-3 border-b border-solid border-slate-200 rounded-t">
                             <h3 className="text-xl w-full text-center font-semibold">
@@ -708,9 +708,9 @@ const Sidebar = () => {
         </div>
       </div>
       <div
-        className={show ? "backdrop backdrop-open z-10" : "backdrop z-10"}
+        className={show ? "backdrop backdrop-open " : "backdrop "}
         onClick={handleClick}></div>
-      <div className={show ? "sidebar collapse" : "sidebar"}>
+      <div className={show ? "sidebar collapse z-20" : "sidebar z-20"}>
         <div>
           <img src="https://static.vecteezy.com/system/resources/previews/004/825/694/non_2x/g-golden-letter-logo-design-with-circle-swoosh-and-gold-metal-texture-vector.jpg" />
         </div>

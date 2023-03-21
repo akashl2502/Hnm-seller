@@ -37,8 +37,10 @@ import {
   sellerref,
 } from "../../Serverquery/Firebaseref";
 import { Globaltoast, LS } from "../../constants/Reusedfunctopn";
+import * as BootstrapIcons from "react-icons/bs";
 const Glassmorphismbox = () => {
   const [change, setChange] = useState(false);
+  const [forget, setForget] = useState(false);
   const [OTP, setOTP] = useState("");
   const [Loading, Setloading] = useState(false);
   const [Email, Setemail] = useState("");
@@ -50,6 +52,7 @@ const Glassmorphismbox = () => {
   const [phoneNumber, setPhoneNumber] = useState(countryCode);
   const [Admindata, Setadmindata] = useState([]);
   const [Userdata, Setuserdata] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const toastId = Globaltoast;
   const {
     data: admin,
@@ -243,86 +246,275 @@ const Glassmorphismbox = () => {
             <div class="card-3d-wrap mx-auto">
               <div class="card-3d-wrapper">
                 <div class="card-front">
-                  <div class="center-wrap">
-                    <div class="section text-center">
-                      <h4 class="mb-4 pb-3 text-lg text-white font-poppins tracking-wider">
-                        Login
-                      </h4>
-                      <div class="form-group">
-                        <input
-                          type="email"
-                          name="logemail"
-                          class="form-style"
-                          placeholder="Your Email"
-                          id="logemail"
-                          autocomplete="off"
-                          disabled={Otpbool2}
-                          onChange={(e) => {
-                            Setemail(e.target.value);
-                          }}
-                        />
-
-                        <UilEnvelopeOpen
-                          size="25"
-                          class="input-icon"
-                          color="#ffeba7"
-                        />
-                      </div>
-                      <div class="form-group">
-                        <input
-                          type="password"
-                          name="logpass"
-                          class="form-style mt-[30px]"
-                          placeholder="Your Password"
-                          id="logpass"
-                          autocomplete="off"
-                          disabled={Otpbool2}
-                          onChange={(e) => {
-                            Setpass(e.target.value);
-                          }}
-                        />
-                        <UilKeySkeleton
-                          size="25"
-                          class="input-icon mt-[30px]"
-                          color="#ffeba7"
-                        />
-                      </div>
-
-                      {Otpbool2 ? (
+                  {showModal ? (
+                    <div class="center-wrap">
+                      <div class="section text-center">
+                        <h4 class="mb-4 pb-3 text-lg text-white font-poppins tracking-wider">
+                          Sign Up
+                        </h4>
                         <div class="form-group">
                           <input
-                            type="number"
+                            type="email"
+                            name="logemail"
+                            class="form-style"
+                            placeholder="Your Email"
+                            id="logemail"
+                            autocomplete="off"
+                            disabled={Otpbool2}
+                            onChange={(e) => {
+                              Setemail(e.target.value);
+                            }}
+                          />
+
+                          <UilEnvelopeOpen
+                            size="25"
+                            class="input-icon"
+                            color="#ffeba7"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <input
+                            type="password"
                             name="logpass"
                             class="form-style mt-[30px]"
-                            placeholder="OTP"
+                            placeholder="Your Password"
                             id="logpass"
                             autocomplete="off"
+                            disabled={Otpbool2}
+                            onChange={(e) => {
+                              Setpass(e.target.value);
+                            }}
                           />
-                          <UilMobileAndroid
+                          <UilKeySkeleton
                             size="25"
                             class="input-icon mt-[30px]"
                             color="#ffeba7"
                           />
                         </div>
-                      ) : (
-                        <div></div>
-                      )}
-                      <a
-                        href="#"
-                        class="btn mt-5"
-                        onClick={() => {
-                          Masterlogin();
-                        }}>
-                        submit
-                      </a>
+                        <div class="form-group">
+                          <input
+                            type="password"
+                            name="logpass"
+                            class="form-style mt-[30px]"
+                            placeholder="Confirm Password"
+                            id="logpass"
+                            autocomplete="off"
+                            disabled={Otpbool2}
+                            onChange={(e) => {
+                              Setpass(e.target.value);
+                            }}
+                          />
+                          <UilKeySkeleton
+                            size="25"
+                            class="input-icon mt-[30px]"
+                            color="#ffeba7"
+                          />
+                        </div>
 
-                      <p class="mb-0 mt-4 text-center">
-                        <a href="#0" class="link">
-                          Forgot your password?
-                        </a>
-                      </p>
+                        {Otpbool2 ? (
+                          <div class="form-group">
+                            <input
+                              type="number"
+                              name="logpass"
+                              class="form-style mt-[30px]"
+                              placeholder="OTP"
+                              id="logpass"
+                              autocomplete="off"
+                            />
+                            <UilMobileAndroid
+                              size="25"
+                              class="input-icon mt-[30px]"
+                              color="#ffeba7"
+                            />
+                          </div>
+                        ) : (
+                          <div></div>
+                        )}
+                        <div className="flex justify-evenly mt-5">
+                          <a href="#" class="btn mt-5">
+                            Sign Up
+                          </a>
+                          <a href=" " class="btn mt-5">
+                            Back
+                          </a>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ) : forget ? (
+                    <div class="center-wrap">
+                      <div class="section text-center">
+                        <h4 class="mb-4 pb-3 text-lg text-white font-poppins tracking-wider">
+                          Forget Password
+                        </h4>
+
+                        <div class="form-group">
+                          <input
+                            type="password"
+                            name="logpass"
+                            class="form-style mt-[30px]"
+                            placeholder="New Password"
+                            id="logpass"
+                            autocomplete="off"
+                            disabled={Otpbool2}
+                            onChange={(e) => {
+                              Setpass(e.target.value);
+                            }}
+                          />
+                          <UilKeySkeleton
+                            size="25"
+                            class="input-icon mt-[30px]"
+                            color="#ffeba7"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <input
+                            type="password"
+                            name="logpass"
+                            class="form-style mt-[30px]"
+                            placeholder="Confirm Password"
+                            id="logpass"
+                            autocomplete="off"
+                            disabled={Otpbool2}
+                            onChange={(e) => {
+                              Setpass(e.target.value);
+                            }}
+                          />
+                          <UilKeySkeleton
+                            size="25"
+                            class="input-icon mt-[30px]"
+                            color="#ffeba7"
+                          />
+                        </div>
+
+                        {Otpbool2 ? (
+                          <div class="form-group">
+                            <input
+                              type="number"
+                              name="logpass"
+                              class="form-style mt-[30px]"
+                              placeholder="OTP"
+                              id="logpass"
+                              autocomplete="off"
+                            />
+                            <UilMobileAndroid
+                              size="25"
+                              class="input-icon mt-[30px]"
+                              color="#ffeba7"
+                            />
+                          </div>
+                        ) : (
+                          <div></div>
+                        )}
+                        <div className="flex justify-evenly mt-5">
+                          <a href="#" class="btn mt-5">
+                            Confirm
+                          </a>
+                          <a href=" " class="btn mt-5">
+                            Back
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div class="center-wrap">
+                      <div class="section text-center">
+                        <h4 class="mb-4 pb-3 text-lg text-white font-poppins tracking-wider">
+                          Login
+                        </h4>
+                        <div class="form-group">
+                          <input
+                            type="email"
+                            name="logemail"
+                            class="form-style"
+                            placeholder="Your Email"
+                            id="logemail"
+                            autocomplete="off"
+                            disabled={Otpbool2}
+                            onChange={(e) => {
+                              Setemail(e.target.value);
+                            }}
+                          />
+
+                          <UilEnvelopeOpen
+                            size="25"
+                            class="input-icon"
+                            color="#ffeba7"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <input
+                            type="password"
+                            name="logpass"
+                            class="form-style mt-[30px]"
+                            placeholder="Your Password"
+                            id="logpass"
+                            autocomplete="off"
+                            disabled={Otpbool2}
+                            onChange={(e) => {
+                              Setpass(e.target.value);
+                            }}
+                          />
+                          <UilKeySkeleton
+                            size="25"
+                            class="input-icon mt-[30px]"
+                            color="#ffeba7"
+                          />
+                        </div>
+
+                        {Otpbool2 ? (
+                          <div class="form-group">
+                            <input
+                              type="number"
+                              name="logpass"
+                              class="form-style mt-[30px]"
+                              placeholder="OTP"
+                              id="logpass"
+                              autocomplete="off"
+                            />
+                            <UilMobileAndroid
+                              size="25"
+                              class="input-icon mt-[30px]"
+                              color="#ffeba7"
+                            />
+                          </div>
+                        ) : (
+                          <div></div>
+                        )}
+                        <a
+                          href="#"
+                          class="btn mt-5"
+                          onClick={() => {
+                            Masterlogin();
+                          }}>
+                          submit
+                        </a>
+                        <div className="flex justify-evenly">
+                          <div>
+                            <p class="mb-0 mt-4 text-center">
+                              <a
+                                href="#0"
+                                class="link"
+                                onClick={() => setShowModal(true)}>
+                                Sign Up !
+                              </a>
+                            </p>
+                          </div>
+                          <div>
+                            <p class="mb-0 mt-4 text-center">
+                              <a
+                                href="#0"
+                                class="link"
+                                onClick={() => {
+                                  setForget(true);
+                                }}>
+                                Forgot your password?
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div class="card-back">
