@@ -119,7 +119,7 @@ const Glassmorphismbox = () => {
         .then((result) => {
           //setload(false);
           const user = result.user.uid;
-
+toast.success("Successfully Login",{id:toastId})
           LS.save("uid", user);
           LS.save("LB", true);
           LS.save("US", "seller");
@@ -151,29 +151,33 @@ const Glassmorphismbox = () => {
     } else {
     }
   };
-  const requestOTP = (e) => {
+  const requestOTP = async (e) => {
     e.preventDefault();
     var check = Userdata.find((data) => `+91${data.number}` == phoneNumber);
-    console.log(check);
     if (phoneNumber.length >= 12) {
       if (check) {
-        setChange(true);
-        setExpandForm(true);
-        generateRecaptcha();
-        toastId.success(`Otp Has Been Sent to ${phoneNumber}`, {
-          id: toastId,
-        });
-        let appVerifier = window.recaptchaVerifier;
-        signInWithPhoneNumber(Authentication, phoneNumber, appVerifier)
-          .then((confirmationResult) => {
-            window.confirmationResult = confirmationResult;
-          })
-          .catch((error) => {
-            toastId.error("Invalid Otp Pin", {
-              id: toastId,
-            });
-            console.log(error);
+        try {
+          setChange(true);
+          setExpandForm(true);
+          generateRecaptcha();
+          toastId.success(`Otp Has Been Sent to ${phoneNumber}`, {
+            id: toastId,
           });
+          let appVerifier = window.recaptchaVerifier;
+
+          signInWithPhoneNumber(Authentication, phoneNumber, appVerifier)
+            .then((confirmationResult) => {
+              window.confirmationResult = confirmationResult;
+            })
+            .catch((error) => {
+              toastId.error("Invalid Otp Pin", {
+                id: toastId,
+              });
+              console.log(error);
+            });
+        } catch (e) {
+          console.log(e);
+        }
       } else {
         toastId.error("Access Denied", { id: toastId });
       }
@@ -485,7 +489,8 @@ const Glassmorphismbox = () => {
                           class="btn mt-5"
                           onClick={() => {
                             Masterlogin();
-                          }}>
+                          }}
+                        >
                           submit
                         </a>
                         <div className="flex justify-evenly">
@@ -494,7 +499,8 @@ const Glassmorphismbox = () => {
                               <a
                                 href="#0"
                                 class="link"
-                                onClick={() => setShowModal(true)}>
+                                onClick={() => setShowModal(true)}
+                              >
                                 Sign Up !
                               </a>
                             </p>
@@ -506,7 +512,8 @@ const Glassmorphismbox = () => {
                                 class="link"
                                 onClick={() => {
                                   setForget(true);
-                                }}>
+                                }}
+                              >
                                 Forgot your password?
                               </a>
                             </p>
@@ -571,7 +578,8 @@ const Glassmorphismbox = () => {
                               onClick={(e) => {
                                 e.preventDefault();
                                 verifyOTP(OTP);
-                              }}>
+                              }}
+                            >
                               Verify Otp
                             </a>
                           </div>
@@ -583,7 +591,8 @@ const Glassmorphismbox = () => {
                           href="#"
                           type="submit"
                           class={`${change ? "hidden" : "btn mt-7 "}`}
-                          onClick={(e) => Onclick(e)}>
+                          onClick={(e) => Onclick(e)}
+                        >
                           Request Otp
                         </a>
                       </form>

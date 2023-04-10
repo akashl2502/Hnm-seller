@@ -24,8 +24,10 @@ import {
   useFirestoreQuery,
   useFirestoreQueryData,
 } from "@react-query-firebase/firestore";
-import { Db } from "../../Firebase/Firebase-Config";
+import { Db, storage } from "../../Firebase/Firebase-Config";
 import { AiFillDelete } from "react-icons/ai";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import uuid from "react-uuid";
 
 function Upcoming() {
   var uid = LS.get("uid");
@@ -53,13 +55,17 @@ function Upcoming() {
     region: "",
     status: 0,
     uid: LS.get("uid"),
+    read: 0,
+    buyeruid: "",
+    file1: false,
+    file2: false,
   });
   const toastid = Globaltoast;
   const [City, Setcity] = useState();
   const [showModal, setShowModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [Updata, Setupdata] = useState([]);
-
+  const [Fileimg, Setfileimg] = useState(null);
   useEffect(() => {
     toastid.dismiss();
     // Getdata();
@@ -79,7 +85,98 @@ function Upcoming() {
   //   });
   //   Setupdata(product);
   // };
+  const uploadfile = (e) => {
+    console.log(e);
+    toast.loading("Uploading File Please Wait ....",{id:toastid})
+    try {
+      var refimgid;
+      const file = e.file;
+      if (file != null) {
+        const storageRef = ref(storage, `files/${uuid()}.pdf`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
 
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {},
+          (error) => {
+            alert(error);
+          },
+          () => {
+            console.log("ohh yeah inside");
+            getDownloadURL(uploadTask.snapshot.ref)
+              .then((downloadURL) => {
+                refimgid = downloadURL;
+              })
+              .then(async (res) => {
+                console.log("ohh yeah data");
+                var name = e.namef;
+                const docRef = doc(Db, "orderdetails", e.docid);
+                if (e.namef == "file1") {
+                  await updateDoc(docRef, { file1: refimgid })
+                    .then((res) => {
+                      toastid.success("File Succcessfully Uploaded", {
+                        id: toastid,
+                      });
+                      setEditModal(false);
+                      Setdocid("");
+                      SetOD({
+                        dor: today,
+                        product: "",
+                        quantity: "",
+                        dod: "",
+                        pincode: "",
+                        city: "",
+                        region: "",
+                        status: 0,
+                        uid: LS.get("uid"),
+                      });
+                    })
+                    .catch((err) => {
+                      toastid.success("Error While Uploading file", {
+                        id: toastid,
+                      });
+                      setEditModal(false);
+                      console.log(err);
+                    });
+                } else {
+                  await updateDoc(docRef, { file2: refimgid })
+                    .then((res) => {
+                      toastid.success("File Succcessfully Uploaded", {
+                        id: toastid,
+                      });
+                      setEditModal(false);
+                      Setdocid("");
+                      SetOD({
+                        dor: today,
+                        product: "",
+                        quantity: "",
+                        dod: "",
+                        pincode: "",
+                        city: "",
+                        region: "",
+                        status: 0,
+                        uid: LS.get("uid"),
+                      });
+                    })
+                    .catch((err) => {
+                      toastid.success("Error While Uploading file", {
+                        id: toastid,
+                      });
+                      setEditModal(false);
+                      console.log(err);
+                    });
+                }
+              });
+          }
+        );
+      } else {
+        toastid.error("Error File cannot be uploaded", { id: toastid });
+      }
+    } catch (e) {
+      console.log(e);
+      toastid.error("Error Please Try Again later", { id: toastid });
+    }
+  };
   const Getcity = async ({ pin }) => {
     if (pin.length == 6) {
       toastid.loading("Acquired Pincode Information", { id: toastid });
@@ -436,6 +533,12 @@ function Upcoming() {
               Pincode,City
             </th>
             <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+              Doc 1
+            </th>
+            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+              Doc 2
+            </th>
+            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
               Action
             </th>
           </tr>
@@ -464,21 +567,49 @@ function Upcoming() {
                   {`${data.pincode} , ${data.city} ,${data.region}`}
                 </td>
                 <td>
+                  {data.file1==false  ? (
+                    <input
+                      type="file"
+                      onChange={(e) => {
+                        if (e.target.files) {
+                          // Setfileimg(e.target.files[0]);
+
+                          uploadfile({
+                            file: e.target.files[0],
+                            namef: "file1",
+                            docid: data.id,
+                          });
+                        }
+                      }}
+                    />
+                  ) : (
+                    <p>File Uploaded</p>
+                  )}
+                </td>
+                <td>
+                  {data.file2==false  ? (
+                    <input
+                      type="file"
+                      onChange={(e) => {
+                        if (e.target.files) {
+                          // Setfileimg(e.target.files[0]);
+
+                          uploadfile({
+                            file: e.target.files[0],
+                            namef: "file2",
+                            docid: data.id,
+                          });
+                        }
+                      }}
+                    />
+                  ) : (
+                    <p>File Uploaded</p>
+                  )}
+                </td>
+                <td>
                   <div className="flex justify-center items-center mr-10 ">
                     <FiEdit
                       onClick={(e) => {
-                        SetOD({
-                          dor: data.dor,
-                          product: data.product,
-                          quantity: data.quantity,
-                          dod: data.dod,
-                          pincode: data.pincode,
-                          city: data.city,
-                          region: data.region,
-                          status: data.status,
-                          uid: data.uid,
-                        });
-                        Setcity(`${data.city} , ${data.region}`);
                         setEditModal(true);
                         Setdocid(data.id);
                       }}

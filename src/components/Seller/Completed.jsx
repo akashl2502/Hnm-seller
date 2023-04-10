@@ -18,8 +18,8 @@ import { LS } from "../../constants/Reusedfunctopn";
 import { Orderdetails } from "../../Serverquery/Firebaseref";
 import { FiEdit } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
-const Completed = () => {
-  var uid = LS.get("uid");
+function Completed  () {
+  var uid = LS.get("data").uid;
   var a = query(
     Orderdetails,
     where("uid", "==", uid),
