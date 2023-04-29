@@ -49,7 +49,7 @@ function Newuser() {
     email: "",
     mob: "",
     gst: "",
-    type: "",
+    type: "buyer",
     uid: uid,
   });
   const navigate = useNavigate();

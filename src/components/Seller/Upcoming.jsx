@@ -36,7 +36,9 @@ function Upcoming() {
     where("uid", "==", uid),
     where("status", "==", 0)
   );
-
+  useEffect(() => {
+    console.log(LS.get('data'));
+  }, []);
   const {
     data: seller,
     isLoading: isloading,
@@ -87,7 +89,7 @@ function Upcoming() {
   // };
   const uploadfile = (e) => {
     console.log(e);
-    toast.loading("Uploading File Please Wait ....",{id:toastid})
+    toast.loading("Uploading File Please Wait ....", { id: toastid });
     try {
       var refimgid;
       const file = e.file;
@@ -567,9 +569,10 @@ function Upcoming() {
                   {`${data.pincode} , ${data.city} ,${data.region}`}
                 </td>
                 <td>
-                  {data.file1==false  ? (
+                  {data.file1 == false ? (
                     <input
                       type="file"
+                      accept="application/pdf"
                       onChange={(e) => {
                         if (e.target.files) {
                           // Setfileimg(e.target.files[0]);
@@ -587,9 +590,10 @@ function Upcoming() {
                   )}
                 </td>
                 <td>
-                  {data.file2==false  ? (
+                  {data.file2 == false ? (
                     <input
                       type="file"
+                      accept="application/pdf"
                       onChange={(e) => {
                         if (e.target.files) {
                           // Setfileimg(e.target.files[0]);

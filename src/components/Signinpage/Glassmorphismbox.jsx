@@ -55,24 +55,6 @@ const Glassmorphismbox = () => {
   const [showModal, setShowModal] = useState(false);
   const toastId = Globaltoast;
   const {
-    data: admin,
-    isLoading,
-    isError,
-  } = useFirestoreQuery(
-    ["admin"],
-    adminref,
-    { subscribe: true },
-    {
-      onSuccess: (snapshot) => {
-        var a = snapshot.docs.map((docSnapshot) => {
-          const data = { ...docSnapshot.data(), id: docSnapshot.id };
-          return data;
-        });
-        Setadmindata(a);
-      },
-    }
-  );
-  const {
     data: seller,
     isLoading: uload,
     isError: uerror,
@@ -105,10 +87,9 @@ const Glassmorphismbox = () => {
       Authentication
     );
   };
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
   const verifyOTP = (e) => {
-    // let otp = e.target.value;
-    // setOTP(otp);
+
     if (e.length == 6) {
       toastId.loading("Verifying Otp Please Wait .....", {
         id: toastId,
@@ -123,16 +104,6 @@ const Glassmorphismbox = () => {
           LS.save("uid", user);
           LS.save("LB", true);
           LS.save("US", "seller");
-          var userdata = {};
-          // var a = Masteruserdetails.docs.map((docSnapshot) => {
-          //   const data = { ...docSnapshot.data(), id: docSnapshot.id };
-          //   return data;
-          // });
-          //navigate("/newuser");
-          // navigate({
-          //   pathname: "/newuser",
-          //   search: createSearchParams({ uid: user }).toString,
-          // });
           navigate({
             pathname: "../newuser",
             search: createSearchParams({
@@ -145,8 +116,7 @@ const Glassmorphismbox = () => {
           if (error instanceof FirebaseError) {
             toastId.error(error.code, { id: toastId });
           }
-          //setload(false);
-          // Toastdata({ data: "Error While Sending Otp" });
+       
         });
     } else {
     }
@@ -191,42 +161,9 @@ const Glassmorphismbox = () => {
     requestOTP(e);
   };
 
-  const Masterlogin = () => {
-    var check = Admindata.find((data) => data.email == Email);
-    if (Email.length != 0 && Pass.length != 0) {
-      if (check) {
-        if (check.status == true) {
-          toastId.loading("Loading...", { id: toastId });
-          signInWithEmailAndPassword(Authentication, Email, Pass)
-            .then(async (res) => {
-              toastId.success("Login Successfull", { id: toastId });
-              var user = res.user.uid;
-              LS.save("uid", user);
-              LS.save("LB", true);
-              LS.save("US", "Admin");
-              navigate("/admin");
-            })
-            .catch((error) => {
-              // Give your error the firebase.FirebaseError type and
-              // you'll have access to all the FirebaseError properties
-              if (error instanceof FirebaseError) {
-                toastId.error(error.code, { id: toastId });
-              }
-            });
-        } else {
-          toastId.error("Access Have Been Revoked By admin", { id: toastId });
-        }
-      } else {
-        toast.error("Access Not provided To User", {
-          id: toastId,
-        });
-      }
-    } else {
-      toastId.error("Please Enter Email And Password", { id: toastId });
-    }
-  };
+ 
 
-  if (isLoading || uload || Loading) {
+  if ( uload || Loading) {
     return <p className="mx-auto text-lg">Loading</p>;
   }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   addDoc,
   doc,
@@ -6,7 +6,8 @@ import {
   getDocs,
   onSnapshot,
   query,
-  updateDoc,deleteDoc,
+  updateDoc,
+  deleteDoc,
   where,
 } from "firebase/firestore";
 import {
@@ -20,11 +21,18 @@ import { FiEdit } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
 const Delivery = () => {
   var uid = LS.get("uid");
-  var a = query(
-    Orderdetails,
-    where("uid", "==", uid),
-    where("status", "==", 1)
-  );
+  var a =
+    LS.get("data").type == "seller"
+      ? query(
+          Orderdetails,
+          where("uid", "==", uid),
+          where("status", "==", 1)
+        )
+      : query(
+          Orderdetails,
+          where("buyeruid", "==", uid),
+          where("status", "==", 1)
+        );
   const {
     data: seller,
     isLoading: isloading,
@@ -38,6 +46,7 @@ const Delivery = () => {
   var a = seller.docs.map((docSnapshot) => {
     product.push({ ...docSnapshot.data(), id: docSnapshot.id });
   });
+  console.log(product);
 
   return (
     <div class="block w-[100%] overflow-x-auto mt-20">
@@ -66,6 +75,10 @@ const Delivery = () => {
             <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
               Pincode,City
             </th>
+            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+              Track
+            </th>
+
             {/* <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
               Action
             </th> */}
@@ -93,6 +106,21 @@ const Delivery = () => {
                 </td>
                 <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                   {`${data.pincode} , ${data.city} ,${data.region}`}
+                </td>
+                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                  {data.track ? (
+                    <a
+                      className="px-4 py-1 bg-blue-600 text-white rounded"
+                      href={data.track}
+                      target="_parent"
+                    >
+                      Track
+                    </a>
+                  ) : (
+                    <a className="px-4 py-1 bg-red-600 text-white rounded">
+                      Tracking Not Available
+                    </a>
+                  )}
                 </td>
                 {/* <td>
                   <div className="flex justify-center items-center mr-10">

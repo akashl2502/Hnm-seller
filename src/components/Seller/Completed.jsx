@@ -6,7 +6,8 @@ import {
   getDocs,
   onSnapshot,
   query,
-  updateDoc,deleteDoc,
+  updateDoc,
+  deleteDoc,
   where,
 } from "firebase/firestore";
 import {
@@ -18,13 +19,16 @@ import { LS } from "../../constants/Reusedfunctopn";
 import { Orderdetails } from "../../Serverquery/Firebaseref";
 import { FiEdit } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
-function Completed  () {
+function Completed() {
   var uid = LS.get("data").uid;
-  var a = query(
-    Orderdetails,
-    where("uid", "==", uid),
-    where("status", "==", 2)
-  );
+  var a =
+    LS.get("data").type == "seller"
+      ? query(Orderdetails, where("uid", "==", uid), where("status", "==", 2))
+      : query(
+          Orderdetails,
+          where("buyeruid", "==", uid),
+          where("status", "==", 2)
+        );
   const {
     data: seller,
     isLoading: isloading,
@@ -113,6 +117,6 @@ function Completed  () {
       <Toaster position="bottom-center" reverseOrder={false} />
     </div>
   );
-};
+}
 
 export default Completed;

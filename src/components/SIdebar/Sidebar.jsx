@@ -32,19 +32,24 @@ import {
 import { Orderdetails } from "../../Serverquery/Firebaseref";
 
 function Sidebar() {
+  var a = LS.get("data").type;
   const SellerData = [
-    {
-      title: "Home",
-      path: "/sellerhome",
-      icon: <AiIcons.AiFillHome />,
-      cName: "nav-text",
-    },
-    {
-      title: "Upcoming Records",
-      path: "/upcoming",
-      icon: <IoIcons.IoIosPaper />,
-      cName: "nav-text",
-    },
+    a == "seller"
+      ? {
+          title: "Home",
+          path: "/sellerhome",
+          icon: <AiIcons.AiFillHome />,
+          cName: "nav-text",
+        }
+      : null,
+    a == "seller"
+      ? {
+          title: "Upcoming Records",
+          path: "/upcoming",
+          icon: <IoIcons.IoIosPaper />,
+          cName: "nav-text",
+        }
+      : null,
     {
       title: "Inprogress Records",
       path: "/delivery",
@@ -65,22 +70,6 @@ function Sidebar() {
   const handleClick = () => {
     setShow(!show);
   };
-  var uid = LS.get("data").uid;
-  var a = query(Orderdetails, where("read", "==", 0));
-  const {
-    data: seller,
-    isLoading: isloading,
-    isError: error,
-  } = useFirestoreQuery(["sidebar"], a, { subscribe: true }, {});
-
-  if (isloading) {
-    return <h1>Loading</h1>;
-  }
-  var product = [];
-  var a = seller.docs.map((docSnapshot) => {
-    product.push({ ...docSnapshot.data(), id: docSnapshot.id });
-  });
-  console.log(product);
 
   return (
     <div>
@@ -563,15 +552,17 @@ function Sidebar() {
         </div>
         <ul>
           {SidebarData.map((item, index) => {
-            return (
-              <li key={index}>
-                <Link to={item.path} className="nav-link">
-                  {item.icon}
+            if (item) {
+              return (
+                <li key={index}>
+                  <Link to={item.path} className="nav-link">
+                    {item.icon}
 
-                  <span>{item.title}</span>
-                </Link>
-              </li>
-            );
+                    <span>{item.title}</span>
+                  </Link>
+                </li>
+              );
+            }
           })}
         </ul>
         <div className="absolute bottom-0 left-[25%] text-white">
