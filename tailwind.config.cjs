@@ -1,9 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./index.html", "./src/**/*.{js,jsx}", 'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'],
-  mode: "jit",
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx}",
+    "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
+  ],
+
   theme: {
-   
     extend: {
       colors: {
         primary: "#00040f",
@@ -15,7 +18,7 @@ module.exports = {
         poppins: ["Poppins", "sans-serif"],
       },
     },
-    
+
     screens: {
       xs: "480px",
       ss: "620px",
@@ -24,21 +27,21 @@ module.exports = {
       lg: "1200px",
       xl: "1700px",
     },
-    'animation': {
-      'text':'text 5s ease infinite',
-  },
-  'keyframes': {
-      'text': {
-          '0%, 100%': {
-             'background-size':'200% 200%',
-              'background-position': 'left center'
-          },
-          '50%': {
-             'background-size':'200% 200%',
-              'background-position': 'right center'
-          }
+    animation: {
+      text: "text 5s ease infinite",
+    },
+    keyframes: {
+      text: {
+        "0%, 100%": {
+          "background-size": "200% 200%",
+          "background-position": "left center",
+        },
+        "50%": {
+          "background-size": "200% 200%",
+          "background-position": "right center",
+        },
       },
-  }
+    },
   },
-  plugins: [require('tailwind-scrollbar','flowbite/plugin')],
+ 
 };

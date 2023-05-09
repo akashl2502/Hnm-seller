@@ -518,22 +518,19 @@ function Sidebar() {
                     LS.clear();
                     navigate("../signin", { replace: true });
                   });
-                }}
-              >
+                }}>
                 <span class="inline-flex mr-1">
                   <svg
                     class="w-5 h-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
+                    xmlns="http://www.w3.org/2000/svg">
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       stroke-width="2"
-                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                    ></path>
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                   </svg>
                 </span>
                 Logout
@@ -543,10 +540,9 @@ function Sidebar() {
         </div>
       </div>
       <div
-        className={show ? "backdrop backdrop-open " : "backdrop "}
-        onClick={handleClick}
-      ></div>
-      <div className={show ? "sidebar collapse z-20" : "sidebar z-20"}>
+        className={show ? "backdrop backdrop-open z-[1] " : "backdrop "}
+        onClick={handleClick}></div>
+      <div className={show ? "sidebar collapse1 z-30" : "sidebar z-30"}>
         <div>
           <img src="https://static.vecteezy.com/system/resources/previews/004/825/694/non_2x/g-golden-letter-logo-design-with-circle-swoosh-and-gold-metal-texture-vector.jpg" />
         </div>

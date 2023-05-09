@@ -398,20 +398,20 @@ a.forgot {
 }
 
 .home {
-  background-color:hsla(0,0%,100%,1);
-  background-image:
-  radial-gradient(at 0% 99%, hsla(64,100%,70%,0.31) 0px, transparent 50%),
-  radial-gradient(at 98% 99%, hsla(231,100%,76%,0.59) 0px, transparent 50%),
-  radial-gradient(at 10% 61%, hsla(343,100%,76%,0.33) 0px, transparent 50%);
-
+  background: url("https://img.freepik.com/free-vector/white-abstract-background-design_23-2148825582.jpg?w=1060&t=st=1683641277~exp=1683641877~hmac=b8fd03f8682c3de0b7992c9f608f24131f21eff76613c22df841f8fdec1aeaed")
+    no-repeat center;
+  background-size: cover;
 }
 
-.home2{
+.home2 {
   background-color: hsla(113, 0%, 100%, 1);
-  background-image:
-  radial-gradient(at 50% 55%, hsla(173,88%,78%,0.35) 0px, transparent 50%),
-  radial-gradient(at 75% 54%, hsla(240,100%,70%,0.18) 0px, transparent 50%),
-  radial-gradient(at 30% 52%, hsla(343,100%,76%,0.33) 0px, transparent 50%);
+  background-image: radial-gradient(
+      at 50% 55%,
+      hsla(173, 88%, 78%, 0.35) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 75% 54%, hsla(240, 100%, 70%, 0.18) 0px, transparent 50%),
+    radial-gradient(at 30% 52%, hsla(343, 100%, 76%, 0.33) 0px, transparent 50%);
 }
 
 .home1 {
@@ -431,14 +431,95 @@ a.forgot {
   border: 1px solid rgba(255, 255, 255, 0.31);
 }
 
-.box{
-  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+.box {
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
+    rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
 }
 
+.section {
+  clear: both;
+  padding: 0px;
+  margin: 0px;
+}
 
+/*  COLUMN SETUP  */
+.col {
+  display: block;
+  float: left;
+  margin: 3% 0 5.5% 1.6%;
+}
+.col:first-child {
+  margin-left: 0;
+}
+
+/*  GROUPING  */
+.group:before,
+.group:after {
+  content: "";
+  display: table;
+}
+.group:after {
+  clear: both;
+}
+.group {
+  zoom: 1; /* For IE 6/7 */
+}
+/*  GRID OF THREE  */
+.span_3_of_3 {
+  width: 100%;
+}
+.span_2_of_3 {
+  width: 66.13%;
+}
+.span_1_of_3 {
+  width: 32.26%;
+}
+
+/*  GO FULL WIDTH BELOW 480 PIXELS */
+@media only screen and (max-width: 480px) {
+  .col {
+    margin: 1% 0 1% 0%;
+  }
+  .span_3_of_3,
+  .span_2_of_3,
+  .span_1_of_3 {
+    width: 100%;
+  }
+}
 
 @media screen and (max-width: 490px) {
   .glass {
     height: 500px;
+  }
+}
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+
+th,
+td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #1d1b22;
+}
+
+@media only screen and (max-width: 600px) {
+  th,
+  td {
+    padding: 4px;
+  }
+
+  th {
+    font-size: 14px;
   }
 }

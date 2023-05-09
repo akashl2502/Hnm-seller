@@ -172,7 +172,7 @@ const Glassmorphismbox = () => {
       <div class="row full-height justify-content-center">
         <div class="col-12 text-center align-self-center py-5">
           <div class="section pb-5  pt-sm-2 text-center">
-            <h6 class="mb-0 pb-3 text-white">
+            <h6 class="mb-0 pb-3 text-white max-sm:mt-[2rem] ">
             
               <span className="text-xl font-bold tracking-widest ">Seller</span>
             </h6>

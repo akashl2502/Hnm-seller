@@ -316,9 +316,9 @@ function Upcoming() {
     product.push({ ...docSnapshot.data(), id: docSnapshot.id });
   });
   return (
-    <div class="block w-[100%] overflow-x-auto mt-20">
+    <div class="block w-[100%] pt-20 overflow-hidden home h-screen">
       <div className="mt-1 flex justify-between">
-        <p className="ml-10 text-xl font-sans">Upcoming Records</p>
+        <p className="ml-10 text-xl font-sans max-xs:ml-5">Upcoming Records</p>
         <div>
           <button
             className="px-2 py-2 bg-[#171717] text-white text-xs rounded-md mr-10"
@@ -512,7 +512,8 @@ function Upcoming() {
           </div>
         ) : null}
       </div>
-      <table class="items-center mt-5 bg-transparent w-full border-collapse ">
+      <div className="table-container px-10 w-[97%] h-full mt-20 max-xs:px-4 max-ss:px-6 max-sm:px-8">
+      <table class="items-center overflow-auto mt-5 bg-transparent border-collapse rounded-xl">
         <thead className="bg-gray-800 text-white">
           <tr>
             <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
@@ -550,25 +551,25 @@ function Upcoming() {
           {product.map((data, index) => {
             return (
               <tr key={index}>
-                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                   {index + 1}
                 </td>
-                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                   {data.dor}
                 </td>
-                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                   {data.product}
                 </td>
-                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                   {data.quantity}
                 </td>
-                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                   {data.dod}
                 </td>
-                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                   {`${data.pincode} , ${data.city} ,${data.region}`}
                 </td>
-                <td>
+                <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                   {data.file1 == false ? (
                     <input
                       type="file"
@@ -589,7 +590,7 @@ function Upcoming() {
                     <p>File Uploaded</p>
                   )}
                 </td>
-                <td>
+                <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                   {data.file2 == false ? (
                     <input
                       type="file"
@@ -610,8 +611,8 @@ function Upcoming() {
                     <p>File Uploaded</p>
                   )}
                 </td>
-                <td>
-                  <div className="flex justify-center items-center mr-10 ">
+                <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                  <div className="flex justify-center items-center gap-2">
                     <FiEdit
                       onClick={(e) => {
                         setEditModal(true);
@@ -648,6 +649,7 @@ function Upcoming() {
           })}
         </tbody>
       </table>
+      </div>
       <Toaster position="bottom-center" reverseOrder={false} />
     </div>
   );

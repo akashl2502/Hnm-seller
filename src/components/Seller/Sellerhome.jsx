@@ -44,9 +44,9 @@ function Sellerhome() {
     status: 0,
     uid: LS.get("uid"),
     read: 0,
-    buyeruid:"",
-    file1:"",
-    file2:""
+    buyeruid: "",
+    file1: "",
+    file2: "",
   });
   const toastid = Globaltoast;
   const [City, Setcity] = useState();
@@ -57,12 +57,12 @@ function Sellerhome() {
   useEffect(() => {
     toastid.dismiss();
     var newdata = sessionStorage.getItem("newdata");
-    console.log(newdata)
-    if(newdata){
-      sessionStorage.removeItem("newdata")
+    console.log(newdata);
+    if (newdata) {
+      sessionStorage.removeItem("newdata");
       toastid.success("New Request Has Been Requested", { id: toastid });
     }
-   
+
     // Getdata();
   }, []);
   // const Getdata = async () => {
@@ -130,7 +130,7 @@ function Sellerhome() {
           setShowModal(false);
           toastid.success("New Request Has Been Requested", { id: toastid });
           sessionStorage.setItem("newdata", true);
-          window.location.reload()
+          window.location.reload();
         })
         .catch((e) => {
           console.log(e);
@@ -155,10 +155,10 @@ function Sellerhome() {
   return (
     <div className="h-screen w-full home ">
       <div className="h-full flex justify-center items-center ">
-        <div className="box h-[400px] pb-12 w-[800px] rounded-lg mt-5  ">
-          <div className="h-full flex flex-col flex-wrap">
-            <div className="h-[70%] flex  justify-evenly items-center flex-wrap">
-              <div className="flex flex-col gap-2 ">
+        <div className="bg-[#fafafa]  shadow border home h-[430px] pb-12 w-[1000px] rounded-lg mt-5">
+          <div className="h-full flex justify-center items-center px-4 ">
+            <div className=" section group  ">
+              <div className=" col span_1_of_3">
                 <label className="block text-black text-sm font-bold mb-1">
                   Product
                 </label>
@@ -169,7 +169,7 @@ function Sellerhome() {
                   }}
                 />
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 col span_1_of_3">
                 <label className="block text-black text-sm font-bold mb-1">
                   Quantity (IN KGS)
                 </label>
@@ -181,7 +181,7 @@ function Sellerhome() {
                   }}
                 />
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 col span_1_of_3">
                 <label className="block text-black text-sm font-bold mb-1">
                   Date Of Dispatch
                 </label>
@@ -193,45 +193,45 @@ function Sellerhome() {
                   }}
                 />
               </div>
-            </div>
-            <div className="w-full flex justify-evenly flex-wrap">
-              <div className="flex flex-col gap-2">
-                <label className="block text-black text-sm font-bold mb-1">
-                  Pin Code
-                </label>
-                <input
-                  maxLength={6}
-                  type="number"
-                  className="shadow appearance-none outline-none  border rounded w-full py-1 px-1 text-black"
-                  onChange={(e) => {
-                    Getcity({ pin: e.target.value });
-                  }}
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="block text-black text-sm font-bold mb-1">
-                  Region, City
-                </label>
-                <input
-                  className="shadow appearance-none outline-none  border rounded w-full py-1 px-1 text-black"
-                  defaultValue={City}
-                  disabled
-                />
-              </div>
-              <div className="flex h-full justify-center items-center">
-                <div className="flex flex-col justify-center items-center text-white px-8 py-2 text-sm rounded-lg bg-[#1717ab] gap-2">
-                  <button
-                    onClick={(e) => {
-                      Newrequest(e);
+              <div className="section group">
+                <div className="flex flex-col gap-2  col span_1_of_3">
+                  <label className="block text-black text-sm font-bold mb-1">
+                    Pin Code
+                  </label>
+                  <input
+                    maxLength={6}
+                    type="number"
+                    className="shadow appearance-none outline-none  border rounded w-full py-1 px-1 text-black"
+                    onChange={(e) => {
+                      Getcity({ pin: e.target.value });
                     }}
-                  >
-                    Submit
-                  </button>
+                  />
+                </div>
+                <div className="flex flex-col gap-2 col span_1_of_3">
+                  <label className="block text-black text-sm font-bold mb-1 ">
+                    Region, City
+                  </label>
+                  <input
+                    className="shadow appearance-none outline-none  border rounded w-full py-1 px-1 text-black"
+                    defaultValue={City}
+                    disabled
+                  />
                 </div>
               </div>
             </div>
           </div>
+          <div className="w-full flex justify-center items-center ">
+            <div className="text-center  w-[10%] items-center  text-white px-2 py-2  text-sm rounded-lg bg-[#1717ab] gap-2 max-xs:w-[40%] max-sm:w-[50%]">
+              <button
+                onClick={(e) => {
+                  Newrequest(e);
+                }}>
+                Submit
+              </button>
+            </div>
+          </div>
         </div>
+
         <Toaster position="bottom-center" reverseOrder={false} />
       </div>
     </div>
