@@ -36,7 +36,13 @@ const Delivery = () => {
   } = useFirestoreQuery(["inprogress_seller"], a, { subscribe: true }, {});
   const [showModal, setShowModal] = useState(false);
   if (isloading) {
-    return <h1>Loading</h1>;
+    return (
+      <div class="loader flex justify-center items-center h-screen">
+        <div data-glitch="Loading..." class="glitch">
+          Loading...
+        </div>
+      </div>
+    );
   }
   var product = [];
   var a = seller.docs.map((docSnapshot) => {

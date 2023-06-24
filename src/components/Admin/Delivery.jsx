@@ -20,6 +20,7 @@ import { Orderdetails } from "../../Serverquery/Firebaseref";
 import { FiEdit } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
 import { AiFillDelete } from "react-icons/ai";
+import Loading from "../SIdebar/Loading";
 
 const AdDelivery = () => {
   var a = query(
@@ -34,7 +35,13 @@ const AdDelivery = () => {
   } = useFirestoreQuery(["inprogress_admin"], a, { subscribe: true }, {});
 
   if (isloading) {
-    return <h1>Loading</h1>;
+    return (
+      <div class="loader flex justify-center items-center h-screen">
+        <div data-glitch="Loading..." class="glitch">
+          Loading...
+        </div>
+      </div>
+    );
   }
   var product = [];
   var a = seller.docs.map((docSnapshot) => {

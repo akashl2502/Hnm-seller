@@ -23,7 +23,8 @@ import {
   getDocs,
   onSnapshot,
   query,
-  updateDoc,deleteDoc,
+  updateDoc,
+  deleteDoc,
   where,
 } from "firebase/firestore";
 import {
@@ -35,6 +36,7 @@ import { Orderdetails } from "../../Serverquery/Firebaseref";
 import moment from "moment";
 import { Globaltoast } from "../../constants/Reusedfunctopn";
 import { AiFillDelete } from "react-icons/ai";
+import Loading from "../SIdebar/Loading";
 
 const AdUpcoming = () => {
   var a = query(Orderdetails, where("status", "==", 0));
@@ -49,7 +51,13 @@ const AdUpcoming = () => {
   const [showModal, setShowModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   if (isloading) {
-    return <h1>Loading</h1>;
+    return (
+      <div class="loader flex justify-center items-center h-screen">
+        <div data-glitch="Loading..." class="glitch">
+          Loading...
+        </div>
+      </div>
+    );
   }
   const toastid = Globaltoast;
   var product = [];

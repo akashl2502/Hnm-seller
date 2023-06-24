@@ -173,8 +173,7 @@ function Newuser() {
                     <select
                       onChange={(e) => {
                         Setnewdata({ ...Newdata, type: e.target.value });
-                      }}
-                    >
+                      }}>
                       <option>buyer</option>
                       <option>seller</option>
                     </select>
@@ -200,15 +199,18 @@ function Newuser() {
               className="login-btn"
               onClick={(e) => {
                 Setdata(e);
-              }}
-            >
+              }}>
               Update
             </button>
           </div>
         </div>
       ) : (
         <>
-          <h1>Loading</h1>
+          <div class="loader flex justify-center items-center h-screen">
+            <div data-glitch="Loading..." class="glitch">
+              Loading...
+            </div>
+          </div>
         </>
       )}
       <Toaster position="bottom-center" reverseOrder={false} />

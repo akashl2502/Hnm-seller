@@ -37,7 +37,7 @@ function Upcoming() {
     where("status", "==", 0)
   );
   useEffect(() => {
-    console.log(LS.get('data'));
+    console.log(LS.get("data"));
   }, []);
   const {
     data: seller,
@@ -309,7 +309,13 @@ function Upcoming() {
     }
   };
   if (isloading) {
-    return <h1>Loading</h1>;
+    return (
+      <div class="loader flex justify-center items-center h-screen">
+        <div data-glitch="Loading..." class="glitch">
+          Loading...
+        </div>
+      </div>
+    );
   }
   var product = [];
   var a = seller.docs.map((docSnapshot) => {
@@ -322,8 +328,7 @@ function Upcoming() {
         <div>
           <button
             className="px-2 py-2 bg-[#171717] text-white text-xs rounded-md mr-10"
-            onClick={() => setShowModal(true)}
-          >
+            onClick={() => setShowModal(true)}>
             New Dispatch
           </button>
         </div>
@@ -337,8 +342,7 @@ function Upcoming() {
                   </h3>
                   <button
                     className="bg-transparent border-0 text-black float-right"
-                    onClick={() => setShowModal(false)}
-                  >
+                    onClick={() => setShowModal(false)}>
                     <span className="text-black opacity-7 h-6 w-6 text-xl block rounded-full">
                       <AiFillCloseCircle onClick={() => setShowModal(false)} />
                     </span>
@@ -399,8 +403,7 @@ function Upcoming() {
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
                     type="button"
-                    onClick={() => setShowModal(false)}
-                  >
+                    onClick={() => setShowModal(false)}>
                     Close
                   </button>
                   <button
@@ -408,8 +411,7 @@ function Upcoming() {
                     type="button"
                     onClick={(e) => {
                       Newrequest(e);
-                    }}
-                  >
+                    }}>
                     Save
                   </button>
                 </div>
@@ -427,8 +429,7 @@ function Upcoming() {
                   </h3>
                   <button
                     className="bg-transparent border-0 text-black float-right"
-                    onClick={() => setEditModal(false)}
-                  >
+                    onClick={() => setEditModal(false)}>
                     <span className="text-black opacity-7 h-6 w-6 text-xl block rounded-full">
                       <AiFillCloseCircle onClick={() => setEditModal(false)} />
                     </span>
@@ -493,8 +494,7 @@ function Upcoming() {
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
                     type="button"
-                    onClick={() => setEditModal(false)}
-                  >
+                    onClick={() => setEditModal(false)}>
                     Close
                   </button>
                   <button
@@ -502,8 +502,7 @@ function Upcoming() {
                     type="button"
                     onClick={(e) => {
                       Editrequest(e);
-                    }}
-                  >
+                    }}>
                     Edit
                   </button>
                 </div>
@@ -513,142 +512,142 @@ function Upcoming() {
         ) : null}
       </div>
       <div className="table-container px-10 w-[97%] h-full mt-20 max-xs:px-4 max-ss:px-6 max-sm:px-8">
-      <table class="items-center overflow-auto mt-5 bg-transparent border-collapse rounded-xl">
-        <thead className="bg-gray-800 text-white">
-          <tr>
-            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-              Serial.No
-            </th>
-            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-              Date Of Request
-            </th>
+        <table class="items-center overflow-auto mt-5 bg-transparent border-collapse rounded-xl">
+          <thead className="bg-gray-800 text-white">
+            <tr>
+              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Serial.No
+              </th>
+              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Date Of Request
+              </th>
 
-            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-              Product
-            </th>
-            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-              Quantity (KG)
-            </th>
-            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-              Date of Dispatch
-            </th>
-            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-              Pincode,City
-            </th>
-            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-              Doc 1
-            </th>
-            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-              Doc 2
-            </th>
-            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-              Action
-            </th>
-          </tr>
-        </thead>
+              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Product
+              </th>
+              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Quantity (KG)
+              </th>
+              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Date of Dispatch
+              </th>
+              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Pincode,City
+              </th>
+              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Doc 1
+              </th>
+              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Doc 2
+              </th>
+              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Action
+              </th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {product.map((data, index) => {
-            return (
-              <tr key={index}>
-                <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                  {index + 1}
-                </td>
-                <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                  {data.dor}
-                </td>
-                <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                  {data.product}
-                </td>
-                <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                  {data.quantity}
-                </td>
-                <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                  {data.dod}
-                </td>
-                <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                  {`${data.pincode} , ${data.city} ,${data.region}`}
-                </td>
-                <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                  {data.file1 == false ? (
-                    <input
-                      type="file"
-                      accept="application/pdf"
-                      onChange={(e) => {
-                        if (e.target.files) {
-                          // Setfileimg(e.target.files[0]);
+          <tbody>
+            {product.map((data, index) => {
+              return (
+                <tr key={index}>
+                  <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    {index + 1}
+                  </td>
+                  <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    {data.dor}
+                  </td>
+                  <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    {data.product}
+                  </td>
+                  <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    {data.quantity}
+                  </td>
+                  <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    {data.dod}
+                  </td>
+                  <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    {`${data.pincode} , ${data.city} ,${data.region}`}
+                  </td>
+                  <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    {data.file1 == false ? (
+                      <input
+                        type="file"
+                        accept="application/pdf"
+                        onChange={(e) => {
+                          if (e.target.files) {
+                            // Setfileimg(e.target.files[0]);
 
-                          uploadfile({
-                            file: e.target.files[0],
-                            namef: "file1",
-                            docid: data.id,
-                          });
-                        }
-                      }}
-                    />
-                  ) : (
-                    <p>File Uploaded</p>
-                  )}
-                </td>
-                <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                  {data.file2 == false ? (
-                    <input
-                      type="file"
-                      accept="application/pdf"
-                      onChange={(e) => {
-                        if (e.target.files) {
-                          // Setfileimg(e.target.files[0]);
-
-                          uploadfile({
-                            file: e.target.files[0],
-                            namef: "file2",
-                            docid: data.id,
-                          });
-                        }
-                      }}
-                    />
-                  ) : (
-                    <p>File Uploaded</p>
-                  )}
-                </td>
-                <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                  <div className="flex justify-center items-center gap-2">
-                    <FiEdit
-                      onClick={(e) => {
-                        setEditModal(true);
-                        Setdocid(data.id);
-                      }}
-                      color="blue"
-                      title="Edit"
-                    />
-                    <AiFillDelete
-                      onClick={async (e) => {
-                        const docRef = doc(Db, "orderdetails", data.id);
-                        await deleteDoc(docRef)
-                          .then((res) => {
-                            toastid.success(
-                              "New Request Successfully Removed",
-                              {
-                                id: toastid,
-                              }
-                            );
-                          })
-                          .catch((res) => {
-                            toastid.error("Request Cannot Be Removed", {
-                              id: toastid,
+                            uploadfile({
+                              file: e.target.files[0],
+                              namef: "file1",
+                              docid: data.id,
                             });
-                          });
-                      }}
-                      color="red"
-                      title="Delete"
-                    />
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                          }
+                        }}
+                      />
+                    ) : (
+                      <p>File Uploaded</p>
+                    )}
+                  </td>
+                  <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    {data.file2 == false ? (
+                      <input
+                        type="file"
+                        accept="application/pdf"
+                        onChange={(e) => {
+                          if (e.target.files) {
+                            // Setfileimg(e.target.files[0]);
+
+                            uploadfile({
+                              file: e.target.files[0],
+                              namef: "file2",
+                              docid: data.id,
+                            });
+                          }
+                        }}
+                      />
+                    ) : (
+                      <p>File Uploaded</p>
+                    )}
+                  </td>
+                  <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    <div className="flex justify-center items-center gap-2">
+                      <FiEdit
+                        onClick={(e) => {
+                          setEditModal(true);
+                          Setdocid(data.id);
+                        }}
+                        color="blue"
+                        title="Edit"
+                      />
+                      <AiFillDelete
+                        onClick={async (e) => {
+                          const docRef = doc(Db, "orderdetails", data.id);
+                          await deleteDoc(docRef)
+                            .then((res) => {
+                              toastid.success(
+                                "New Request Successfully Removed",
+                                {
+                                  id: toastid,
+                                }
+                              );
+                            })
+                            .catch((res) => {
+                              toastid.error("Request Cannot Be Removed", {
+                                id: toastid,
+                              });
+                            });
+                        }}
+                        color="red"
+                        title="Delete"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
       <Toaster position="bottom-center" reverseOrder={false} />
     </div>

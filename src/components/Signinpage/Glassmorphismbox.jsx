@@ -31,6 +31,7 @@ import {
 import { async } from "@firebase/util";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useFirestoreQuery } from "@react-query-firebase/firestore";
+import "../SIdebar/Loading.css";
 import {
   adminref,
   Masteruserdetails,
@@ -87,9 +88,8 @@ const Glassmorphismbox = () => {
       Authentication
     );
   };
-  
-  const verifyOTP = (e) => {
 
+  const verifyOTP = (e) => {
     if (e.length == 6) {
       toastId.loading("Verifying Otp Please Wait .....", {
         id: toastId,
@@ -116,7 +116,6 @@ const Glassmorphismbox = () => {
           if (error instanceof FirebaseError) {
             toastId.error(error.code, { id: toastId });
           }
-       
         });
     } else {
     }
@@ -161,10 +160,14 @@ const Glassmorphismbox = () => {
     requestOTP(e);
   };
 
- 
-
-  if ( uload || Loading) {
-    return <p className="mx-auto text-lg">Loading</p>;
+  if (uload || Loading) {
+    return (
+      <div class="loader flex justify-center items-center h-screen">
+        <div data-glitch="Loading..." class="glitch">
+          Loading...
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -173,17 +176,16 @@ const Glassmorphismbox = () => {
         <div class="col-12 text-center align-self-center py-5">
           <div class="section pb-5  pt-sm-2 text-center">
             <h6 class="mb-0 pb-3 text-white max-sm:mt-[2rem] ">
-            
               <span className="text-xl font-bold tracking-widest ">Seller</span>
             </h6>
-           
+
             <label for="reg-log"></label>
             <div class="card-3d-wrap mx-auto">
               <div class="card-3d-wrapper">
                 <div class="card-front">
-                <div class="center-wrap">
+                  <div class="center-wrap">
                     <div class="section text-center">
-                    <form onSubmit={requestOTP}>
+                      <form onSubmit={requestOTP}>
                         <h4 class="mb-10 pb-3 text-white">
                           Enter Your Phone Number
                         </h4>
@@ -234,8 +236,7 @@ const Glassmorphismbox = () => {
                               onClick={(e) => {
                                 e.preventDefault();
                                 verifyOTP(OTP);
-                              }}
-                            >
+                              }}>
                               Verify Otp
                             </a>
                           </div>
@@ -247,26 +248,22 @@ const Glassmorphismbox = () => {
                           href="#"
                           type="submit"
                           class={`${change ? "hidden" : "btn mt-7 "}`}
-                          onClick={(e) => Onclick(e)}
-                        >
+                          onClick={(e) => Onclick(e)}>
                           Request Otp
                         </a>
                       </form>
-
                     </div>
                   </div>
-                
-                <div class="card-back">
-                 
+
+                  <div class="card-back"></div>
                 </div>
               </div>
             </div>
+            <Toaster position="bottom-center" reverseOrder={false} />
           </div>
-          <Toaster position="bottom-center" reverseOrder={false} />
+          <div id="recaptcha-container"></div>
         </div>
-        <div id="recaptcha-container"></div>
       </div>
-    </div>
     </div>
   );
 };

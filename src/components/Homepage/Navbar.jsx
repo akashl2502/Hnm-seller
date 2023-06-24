@@ -2,22 +2,26 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { close, menu } from "../../assets";
 import { navLinks } from "../../constants";
-
+import logo from "../../assets/logo.png";
 const Navbar = () => {
   const [active, setActive] = useState("Home");
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
   return (
-    <nav className="w-full flex py-6 justify-between items-center navbar">
-      {/* <img src={logo} alt="hoobank" className="w-[124px] h-[32px]" /> */}
+    <nav className="w-full h-full flex py-6 justify-between items-center navbar">
+      <div className="h-full flex justify-center items-center">
+        {" "}
+        <img src={logo} alt="hoobank" className="w-[84px] h-[84px] pt-5 " />
+      </div>
+
       <p
-        class="text-5xl font-semibold 
+        class="text-3xl font-semibold 
             bg-gradient-to-r bg-clip-text  text-transparent 
             from-teal-500 via-orange-800 to-indigo-500
-            animate-text
+            animate-text pl-5 max-xs:text-xl
             ">
         {" "}
-        Groups
+        Hop N Move
       </p>
       <ul className="list-none sm:flex hidden justify-end items-center flex-1">
         {navLinks.map((nav, index) => (

@@ -14,6 +14,7 @@ import "./sidebar.css";
 import { LS } from "../../constants/Reusedfunctopn";
 import { useNavigate } from "react-router-dom";
 import IconWithDisplayName from "../Admin/Firstletter";
+import logo from "../../assets/logo.png"
 import {
   addDoc,
   doc,
@@ -543,8 +544,8 @@ function Sidebar() {
         className={show ? "backdrop backdrop-open z-[1] " : "backdrop "}
         onClick={handleClick}></div>
       <div className={show ? "sidebar collapse1 z-30" : "sidebar z-30"}>
-        <div>
-          <img src="https://static.vecteezy.com/system/resources/previews/004/825/694/non_2x/g-golden-letter-logo-design-with-circle-swoosh-and-gold-metal-texture-vector.jpg" />
+        <div className="h-[200px] bg-slate-500  flex justify-center items-center">
+          <img src={logo} className="h-[200px] w-[200px]" alt="logo" />
         </div>
         <ul>
           {SidebarData.map((item, index) => {
