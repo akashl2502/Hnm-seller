@@ -21,6 +21,7 @@
     "moment": "^2.29.4",
     "react-collapsing-table": "^0.0.5",
     "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.4.0",
     "react-parallax-tilt": "^1.7.68",

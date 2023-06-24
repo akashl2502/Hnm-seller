@@ -22,11 +22,13 @@ import AdDelivery from "../Admin/Delivery";
 import AdUpcoming from "../Admin/Upcoming";
 import Adduser from "../Admin/Adduser";
 import Loading from "../SIdebar/Loading";
+
 const queryClient = new QueryClient();
 const Routing = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Router forceRefresh={true}>
+        
         <Routes>
           <Route element={<SidebarLayout />}>
             <Route path="/sellerhome" element={<Sellerhome />} />
