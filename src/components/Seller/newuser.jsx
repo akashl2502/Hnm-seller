@@ -34,7 +34,12 @@ function Newuser() {
 
     if (notesList.length != 0) {
       LS.save("data", notesList[0]);
-      navigate("../sellerhome");
+      console.log(notesList[0].type);
+      if (notesList[0].type == "buyer") {
+        navigate("../delivery");
+      } else {
+        navigate("../sellerhome");
+      }
     }
     Setloading(false);
   };
