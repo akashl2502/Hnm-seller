@@ -5,7 +5,16 @@ module.exports = {
     "./src/**/*.{js,jsx}",
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
-
+  container: {
+    center: true,
+    padding: "1rem",
+    screens: {
+      sm: "100%",
+      md: "100%",
+      lg: "1440px",
+      xl: "1280px",
+    },
+  },
   theme: {
     extend: {
       colors: {
@@ -43,5 +52,4 @@ module.exports = {
       },
     },
   },
- 
 };

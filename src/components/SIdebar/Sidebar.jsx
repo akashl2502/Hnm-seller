@@ -14,7 +14,7 @@ import "./sidebar.css";
 import { LS } from "../../constants/Reusedfunctopn";
 import { useNavigate } from "react-router-dom";
 import IconWithDisplayName from "../Admin/Firstletter";
-import logo from "../../assets/logo.png"
+import logo from "../../assets/logo.png";
 import {
   addDoc,
   doc,
@@ -51,6 +51,12 @@ function Sidebar() {
           cName: "nav-text",
         }
       : null,
+    {
+      title: "Request Records",
+      path: "/delivery",
+      icon: <FaIcons.FaCartPlus />,
+      cName: "nav-text",
+    },
     {
       title: "Inprogress Records",
       path: "/delivery",
@@ -519,19 +525,22 @@ function Sidebar() {
                     LS.clear();
                     navigate("../signin", { replace: true });
                   });
-                }}>
+                }}
+              >
                 <span class="inline-flex mr-1">
                   <svg
                     class="w-5 h-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       stroke-width="2"
-                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    ></path>
                   </svg>
                 </span>
                 Logout
@@ -542,7 +551,8 @@ function Sidebar() {
       </div>
       <div
         className={show ? "backdrop backdrop-open z-[1] " : "backdrop "}
-        onClick={handleClick}></div>
+        onClick={handleClick}
+      ></div>
       <div className={show ? "sidebar collapse1 z-30" : "sidebar z-30"}>
         <div className="h-[200px] bg-slate-500  flex justify-center items-center">
           <img src={logo} className="h-[200px] w-[200px]" alt="logo" />

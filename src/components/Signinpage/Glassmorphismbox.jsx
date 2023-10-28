@@ -139,9 +139,9 @@ const Glassmorphismbox = () => {
               window.confirmationResult = confirmationResult;
             })
             .catch((error) => {
-              toastId.error("Invalid Otp Pin", {
-                id: toastId,
-              });
+              if (error instanceof FirebaseError) {
+                toastId.error(error.code, { id: toastId });
+              }
               console.log(error);
             });
         } catch (e) {
@@ -236,7 +236,8 @@ const Glassmorphismbox = () => {
                               onClick={(e) => {
                                 e.preventDefault();
                                 verifyOTP(OTP);
-                              }}>
+                              }}
+                            >
                               Verify Otp
                             </a>
                           </div>
@@ -248,7 +249,8 @@ const Glassmorphismbox = () => {
                           href="#"
                           type="submit"
                           class={`${change ? "hidden" : "btn mt-7 "}`}
-                          onClick={(e) => Onclick(e)}>
+                          onClick={(e) => Onclick(e)}
+                        >
                           Request Otp
                         </a>
                       </form>

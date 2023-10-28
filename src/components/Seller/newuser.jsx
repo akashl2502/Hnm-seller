@@ -5,6 +5,7 @@ import {
   useNavigate,
   createSearchParams,
   useSearchParams,
+  useNavigation,
 } from "react-router-dom";
 import { useState } from "react";
 import { Masteruserdetails } from "../../Serverquery/Firebaseref";
@@ -44,7 +45,7 @@ function Newuser() {
     Setloading(false);
   };
   const [SP] = useSearchParams();
-  const uid = SP.get("uid");
+  const uid = SP.get("uid") ?? LS.get("uid");
   var a = query(Masteruserdetails, where("uid", "==", uid));
 
   const [Loading, Setloading] = useState(true);
@@ -178,7 +179,8 @@ function Newuser() {
                     <select
                       onChange={(e) => {
                         Setnewdata({ ...Newdata, type: e.target.value });
-                      }}>
+                      }}
+                    >
                       <option>buyer</option>
                       <option>seller</option>
                     </select>
@@ -204,7 +206,8 @@ function Newuser() {
               className="login-btn"
               onClick={(e) => {
                 Setdata(e);
-              }}>
+              }}
+            >
               Update
             </button>
           </div>

@@ -22,15 +22,17 @@ import AdDelivery from "../Admin/Delivery";
 import AdUpcoming from "../Admin/Upcoming";
 import Adduser from "../Admin/Adduser";
 import Loading from "../SIdebar/Loading";
-
+import Not_Found from "./Not_Found";
+import Request from "../Seller/Request";
 const queryClient = new QueryClient();
 const Routing = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router forceRefresh={true}>
-        
+      <Router>
         <Routes>
           <Route element={<SidebarLayout />}>
+            <Route path="/Request" element={<Request />} />
+
             <Route path="/sellerhome" element={<Sellerhome />} />
             <Route exact path="/admin" element={<Admin />} />
             <Route exact path="/completed" element={<Completed />}></Route>
@@ -44,14 +46,16 @@ const Routing = () => {
 
           <Route exact path="/" element={<App />}></Route>
           <Route exact path="/signin" element={<Signin />}></Route>
-          <Route exact path="/signup" element={<Signup />}></Route>
+          <Route exact path="/newuser" element={<Newuser />}></Route>
+          {/* <Route exact path="/signup" element={<Signup />}></Route>
 
           <Route exact path="/particles" element={<Particle />}></Route>
 
           <Route exact path="/master" element={<Master />}></Route>
           <Route exact path="/addmobile" element={<Addmobile />}></Route>
-          <Route exact path="/newuser" element={<Newuser />}></Route>
-          <Route exact path="/loading" element={<Loading />}></Route>
+         
+          <Route exact path="/loading" element={<Loading />}></Route> */}
+          <Route exact path="*" element={<Not_Found />}></Route>
         </Routes>
       </Router>
     </QueryClientProvider>

@@ -76,7 +76,7 @@ const Delivery = () => {
                 Date of Dispatch
               </th>
               <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                Pincode,City
+                City,Pincode
               </th>
               <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                 Track
@@ -108,14 +108,15 @@ const Delivery = () => {
                     {data.dod}
                   </td>
                   <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {`${data.pincode} , ${data.city} ,${data.region}`}
+                    {`${data.city} ,${data.region} ,${data.pincode}`}
                   </td>
                   <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                     {data.track ? (
                       <a
                         className="px-4 py-1 bg-blue-600 text-white rounded"
                         href={data.track}
-                        target="_parent">
+                        target="_parent"
+                      >
                         Track
                       </a>
                     ) : (
