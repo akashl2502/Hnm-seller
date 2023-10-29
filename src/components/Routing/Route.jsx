@@ -23,7 +23,10 @@ import AdUpcoming from "../Admin/Upcoming";
 import Adduser from "../Admin/Adduser";
 import Loading from "../SIdebar/Loading";
 import Not_Found from "./Not_Found";
+import Transport from "../Seller/Transport";
 import Request from "../Seller/Request";
+import Driver from "../Seller/Driver";
+Driver
 const queryClient = new QueryClient();
 const Routing = () => {
   return (
@@ -32,6 +35,7 @@ const Routing = () => {
         <Routes>
           <Route element={<SidebarLayout />}>
             <Route path="/Request" element={<Request />} />
+            <Route path="/Transport" element={<Transport />} />
 
             <Route path="/sellerhome" element={<Sellerhome />} />
             <Route exact path="/admin" element={<Admin />} />
@@ -43,7 +47,7 @@ const Routing = () => {
             <Route exact path="/adupcoming" element={<AdUpcoming />}></Route>
             <Route exact path="/aduser" element={<Adduser />}></Route>
           </Route>
-
+          <Route path="/Driver" element={<Driver />} />
           <Route exact path="/" element={<App />}></Route>
           <Route exact path="/signin" element={<Signin />}></Route>
           <Route exact path="/newuser" element={<Newuser />}></Route>

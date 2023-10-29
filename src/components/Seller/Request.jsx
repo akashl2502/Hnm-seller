@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { FiEdit } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
 import { MdDeleteForever } from "react-icons/md";
@@ -30,7 +31,11 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import uuid from "react-uuid";
 
 function Request() {
+  const [expanded, setExpanded] = useState({ state: false, in: null });
+
   const today = moment().format("YYYY-MM-DD");
+  const [gstNumber, setGstNumber] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
   const [Edit, Seteddit] = useState({
     dor: "",
     product: "",
@@ -48,14 +53,14 @@ function Request() {
     where("status", "==", 0)
   );
   useEffect(() => {
-    console.log(LS.get("data"));
+    console.log("Request");
   }, []);
   const {
     data: seller,
     isLoading: isloading,
     isError: error,
     refetch,
-  } = useFirestoreQuery(["ordertails_user"], a, { subscribe: true }, {});
+  } = useFirestoreQuery(["Request_user"], a, { subscribe: true }, {});
   const [Docid, Setdocid] = useState();
   const [OD, SetOD] = useState({
     dor: today,
@@ -331,18 +336,20 @@ function Request() {
   var a = seller.docs.map((docSnapshot) => {
     product.push({ ...docSnapshot.data(), id: docSnapshot.id });
   });
+  var Req = Array.from({ length: product.length }, () => false);
+  console.log(Req);
   return (
     <div class="block w-[100%] pt-20 overflow-hidden home h-screen">
       <div className="mt-1 flex justify-between">
-        <p className="ml-10 text-xl font-sans max-xs:ml-5">Upcoming Records</p>
-        <div>
+        <p className="ml-10 text-xl font-sans max-xs:ml-5">Requested Records</p>
+        {/* <div>
           <button
             className="px-2 py-2 bg-[#171717] text-white text-xs rounded-md mr-10"
             onClick={() => setShowModal(true)}
           >
             New Dispatch
           </button>
-        </div>
+        </div> */}
         {showModal ? (
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-[5000] outline-none  backdrop-blur-sm backdrop-contrast-50 backdrop-brightness-50 transition duration-100 focus:outline-none">
             <div className="relative w-full my-6 mx-auto max-w-3xl">
@@ -551,12 +558,7 @@ function Request() {
               <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                 Pincode,City
               </th>
-              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                Doc 1
-              </th>
-              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                Doc 2
-              </th>
+
               <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                 Action
               </th>
@@ -566,101 +568,62 @@ function Request() {
           <tbody>
             {product.map((data, index) => {
               return (
-                <tr key={index}>
-                  <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {index + 1}
-                  </td>
-                  <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {data.dor}
-                  </td>
-                  <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {data.product}
-                  </td>
-                  <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {data.quantity}
-                  </td>
-                  <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {data.dod}
-                  </td>
-                  <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {`${data.pincode} , ${data.city} ,${data.region}`}
-                  </td>
-                  <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {data.file1 == false ? (
-                      <input
-                        type="file"
-                        accept="application/pdf"
-                        onChange={(e) => {
-                          if (e.target.files) {
-                            // Setfileimg(e.target.files[0]);
+                <>
+                  <tr key={index}>
+                    <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                      {index + 1}
+                    </td>
+                    <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                      {data.dor}
+                    </td>
+                    <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                      {data.product}
+                    </td>
+                    <td class="border-t-0 bg-gray-300 px-6 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                      {data.quantity}
+                    </td>
+                    <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                      {data.dod}
+                    </td>
+                    <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                      {`${data.pincode} ,${data.region} ,${data.city} `}
+                    </td>
 
-                            uploadfile({
-                              file: e.target.files[0],
-                              namef: "file1",
-                              docid: data.id,
-                            });
-                          }
-                        }}
-                      />
-                    ) : (
-                      <p>File Uploaded</p>
-                    )}
-                  </td>
-                  <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {data.file2 == false ? (
-                      <input
-                        type="file"
-                        accept="application/pdf"
-                        onChange={(e) => {
-                          if (e.target.files) {
-                            // Setfileimg(e.target.files[0]);
-
-                            uploadfile({
-                              file: e.target.files[0],
-                              namef: "file2",
-                              docid: data.id,
-                            });
-                          }
-                        }}
-                      />
-                    ) : (
-                      <p>File Uploaded</p>
-                    )}
-                  </td>
-                  <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    <div className="flex justify-center items-center gap-2">
-                      <FiEdit
-                        onClick={(e) => {
-                          setEditModal(true);
-                          Setdocid(data.id);
-                        }}
-                        color="blue"
-                        title="Edit"
-                      />
-                      <AiFillDelete
-                        onClick={async (e) => {
-                          const docRef = doc(Db, "orderdetails", data.id);
-                          await deleteDoc(docRef)
-                            .then((res) => {
-                              toastid.success(
-                                "New Request Successfully Removed",
-                                {
+                    <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                      <div className="flex justify-center items-center gap-2">
+                        {/* <FiEdit
+                          onClick={(e) => {
+                            setEditModal(true);
+                            Setdocid(data.id);
+                          }}
+                          color="blue"
+                          title="Edit"
+                        /> */}
+                        <AiFillDelete
+                          onClick={async (e) => {
+                            const docRef = doc(Db, "orderdetails", data.id);
+                            await deleteDoc(docRef)
+                              .then((res) => {
+                                toastid.success(
+                                  "New Request Successfully Removed",
+                                  {
+                                    id: toastid,
+                                  }
+                                );
+                              })
+                              .catch((res) => {
+                                toastid.error("Request Cannot Be Removed", {
                                   id: toastid,
-                                }
-                              );
-                            })
-                            .catch((res) => {
-                              toastid.error("Request Cannot Be Removed", {
-                                id: toastid,
+                                });
                               });
-                            });
-                        }}
-                        color="red"
-                        title="Delete"
-                      />
-                    </div>
-                  </td>
-                </tr>
+                          }}
+                          color="red"
+                          title="Delete"
+                        />
+                      </div>
+                    </td>
+                  </tr>{" "}
+                </>
               );
             })}
           </tbody>

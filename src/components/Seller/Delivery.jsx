@@ -23,11 +23,11 @@ const Delivery = () => {
   var uid = LS.get("uid");
   var a =
     LS.get("data").type == "seller"
-      ? query(Orderdetails, where("uid", "==", uid), where("status", "==", 1))
+      ? query(Orderdetails, where("uid", "==", uid), where("status", "==", 2))
       : query(
           Orderdetails,
           where("buyeruid", "==", uid),
-          where("status", "==", 1)
+          where("status", "==", 2)
         );
   const {
     data: seller,
@@ -79,6 +79,15 @@ const Delivery = () => {
                 City,Pincode
               </th>
               <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Vehicle Number
+              </th>
+              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Driver Number
+              </th>
+              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Status
+              </th>
+              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                 Track
               </th>
 
@@ -109,6 +118,15 @@ const Delivery = () => {
                   </td>
                   <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                     {`${data.city} ,${data.region} ,${data.pincode}`}
+                  </td>
+                  <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    {data.VN ? data.VN : "Not Available"}
+                  </td>
+                  <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    {data.DN ? data.DN : "Not Available"}
+                  </td>
+                  <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    {data.Vstatus ? "Delivered" : "Not Delivered"}
                   </td>
                   <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                     {data.track ? (

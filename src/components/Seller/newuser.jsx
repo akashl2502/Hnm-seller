@@ -183,6 +183,7 @@ function Newuser() {
                     >
                       <option>buyer</option>
                       <option>seller</option>
+                      <option>transporter</option>
                     </select>
                   </div>
                 </div>

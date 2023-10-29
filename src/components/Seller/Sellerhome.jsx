@@ -39,7 +39,7 @@ function Sellerhome() {
     quantity: "",
     dod: "",
     pincode: "",
-    city: "",
+    city: "Coimbatore",
     region: "",
     status: 0,
     uid: LS.get("uid"),
@@ -47,6 +47,9 @@ function Sellerhome() {
     buyeruid: "",
     file1: "",
     file2: "",
+    GST: "",
+    Bnumber: "",
+    Snumber: LS.get("data").mob,
   });
   const toastid = Globaltoast;
   const [City, Setcity] = useState();
@@ -58,6 +61,7 @@ function Sellerhome() {
     toastid.dismiss();
     var newdata = sessionStorage.getItem("newdata");
     console.log(newdata);
+    console.log(LS.get("data"));
     if (newdata) {
       sessionStorage.removeItem("newdata");
       toastid.success("New Request Has Been Requested", { id: toastid });
@@ -81,37 +85,37 @@ function Sellerhome() {
   //   Setupdata(product);
   // };
 
-  const Getcity = async ({ pin }) => {
-    if (pin.length == 6) {
-      toastid.loading("Acquired Pincode Information", { id: toastid });
-      await axios
-        .get(`https://api.postalpincode.in/pincode/${pin}`)
-        .then((res) => {
-          console.log(res.data);
-          if (res.data[0].Status == "Success") {
-            toastid.success("Pincode Data Acquired", { id: toastid });
-            const CI = res.data[0].PostOffice[0];
-            var Name = res.data[0].PostOffice[0].Name;
-            var Reg = res.data[0].PostOffice[0].Region;
-            var CY = `${Name} ${Reg}`;
-            SetOD({
-              ...OD,
-              city: Name.toUpperCase(),
-              region: Reg.toUpperCase(),
-              pincode: pin,
-            });
-            Setcity(CY);
-          } else {
-            toastid.error("Invalid PinCode ", { id: toastid });
-            SetOD({ ...OD, city: "", region: "" });
-            Setcity("");
-          }
-        });
-    } else {
-      SetOD({ ...OD, city: "", region: "" });
-      Setcity("");
-    }
-  };
+  // const Getcity = async ({ pin }) => {
+  //   if (pin.length == 6) {
+  //     toastid.loading("Acquired Pincode Information", { id: toastid });
+  //     await axios
+  //       .get(`https://api.postalpincode.in/pincode/${pin}`)
+  //       .then((res) => {
+  //         console.log(res.data);
+  //         if (res.data[0].Status == "Success") {
+  //           toastid.success("Pincode Data Acquired", { id: toastid });
+  //           const CI = res.data[0].PostOffice[0];
+  //           var Name = res.data[0].PostOffice[0].Name;
+  //           var Reg = res.data[0].PostOffice[0].Region;
+  //           var CY = `${Name} ${Reg}`;
+  //           SetOD({
+  //             ...OD,
+  //             city: Name.toUpperCase(),
+  //             region: Reg.toUpperCase(),
+  //             pincode: pin,
+  //           });
+  //           Setcity(CY);
+  //         } else {
+  //           toastid.error("Invalid PinCode ", { id: toastid });
+  //           SetOD({ ...OD, city: "", region: "" });
+  //           Setcity("");
+  //         }
+  //       });
+  //   } else {
+  //     SetOD({ ...OD, city: "", region: "" });
+  //     Setcity("");
+  //   }
+  // };
 
   const Newrequest = async (e) => {
     e.preventDefault();
@@ -203,19 +207,34 @@ function Sellerhome() {
                     type="number"
                     className="shadow appearance-none outline-none  border rounded w-full py-1 px-1 text-black"
                     onChange={(e) => {
-                      Getcity({ pin: e.target.value });
+                      SetOD({ ...OD, pincode: e.target.value });
                     }}
                   />
                 </div>
                 <div className="flex flex-col gap-2 col span_1_of_3">
                   <label className="block text-black text-sm font-bold mb-1 ">
-                    Region, City
+                    Region
                   </label>
                   <input
                     className="shadow appearance-none outline-none  border rounded w-full py-1 px-1 text-black"
-                    defaultValue={City}
-                    disabled
+                    onChange={(e) => {
+                      SetOD({ ...OD, region: e.target.value });
+                    }}
                   />
+                </div>
+                <div className="flex flex-col gap-2 col span_1_of_3">
+                  <label className="block text-black text-sm font-bold mb-1 ">
+                    City
+                  </label>
+                  <select
+                    className="shadow appearance-none outline-none  border rounded w-full py-1 px-1 text-black"
+                    onChange={(e) => {
+                      SetOD({ ...OD, city: e.target.value });
+                    }}
+                  >
+                    <option>Coimbatore</option>
+                    <option>Chennai</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -225,7 +244,8 @@ function Sellerhome() {
               <button
                 onClick={(e) => {
                   Newrequest(e);
-                }}>
+                }}
+              >
                 Submit
               </button>
             </div>

@@ -43,6 +43,12 @@ function Sidebar() {
           cName: "nav-text",
         }
       : null,
+    {
+      title: "Request Records",
+      path: "/Request",
+      icon: <FaIcons.FaCartPlus />,
+      cName: "nav-text",
+    },
     a == "seller"
       ? {
           title: "Upcoming Records",
@@ -51,16 +57,17 @@ function Sidebar() {
           cName: "nav-text",
         }
       : null,
+
     {
-      title: "Request Records",
+      title: "Inprogress Records",
       path: "/delivery",
       icon: <FaIcons.FaCartPlus />,
       cName: "nav-text",
     },
     {
-      title: "Inprogress Records",
-      path: "/delivery",
-      icon: <FaIcons.FaCartPlus />,
+      title: "Transport ",
+      path: "/Transport",
+      icon: <IoIcons.IoMdPeople />,
       cName: "nav-text",
     },
     {

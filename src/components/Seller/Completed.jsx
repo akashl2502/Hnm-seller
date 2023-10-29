@@ -27,7 +27,7 @@ function Completed() {
       : query(
           Orderdetails,
           where("buyeruid", "==", uid),
-          where("status", "==", 2)
+          where("status", "==", 3)
         );
   const {
     data: seller,
@@ -76,6 +76,9 @@ function Completed() {
               <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                 Pincode,City
               </th>
+              <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Status
+              </th>
               {/* <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
               Action
             </th> */}
@@ -103,6 +106,9 @@ function Completed() {
                   </td>
                   <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                     {`${data.pincode} , ${data.city} ,${data.region}`}
+                  </td>
+                  <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                  {data.Vstatus ? "Delivered" : "Not Delivered"}
                   </td>
                   {/* <td>
                   <div className="flex justify-center items-center mr-10">
