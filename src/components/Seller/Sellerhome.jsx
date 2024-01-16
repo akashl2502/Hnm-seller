@@ -56,9 +56,9 @@ function Sellerhome() {
   const [showModal, setShowModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [Updata, Setupdata] = useState([]);
+  toast.dismiss();
 
   useEffect(() => {
-    toastid.dismiss();
     var newdata = sessionStorage.getItem("newdata");
     console.log(newdata);
     console.log(LS.get("data"));
@@ -120,13 +120,14 @@ function Sellerhome() {
   const Newrequest = async (e) => {
     e.preventDefault();
     if (
-      OD.city.length != 0 &&
-      OD.dod.length != 0 &&
-      OD.dor.length != 0 &&
-      OD.pincode.length != 0 &&
-      OD.product.length != 0 &&
-      OD.quantity.length != 0 &&
-      OD.region.length != 0
+      (OD.city.length != 0 &&
+        OD.dod.length != 0 &&
+        OD.dor.length != 0 &&
+        OD.pincode.length != 0 &&
+        OD.product.length != 0 &&
+        OD.quantity.length != 0 &&
+        OD.region.length != 0,
+      OD.Bnumber.length == 10 && OD.GST.length == 15)
     ) {
       toastid.loading("Updating Request Please Wait .......", { id: toastid });
       await addDoc(Orderdetails, OD)
@@ -152,14 +153,19 @@ function Sellerhome() {
         toastid.error("Please Enter the Quantity Of Product", { id: toastid });
       } else if (OD.region.length == 0) {
         toastid.error("Please Check pincode", { id: toastid });
+      } else if (OD.Bnumber.length != 10) {
+        toastid.error("Please Enter the buyer number", { id: toastid });
+      } else if (OD.GST.length != 15) {
+        toastid.error("Please Check the buyer gst number", { id: toastid });
       }
     }
   };
 
   return (
     <div className="h-screen w-full home ">
+    
       <div className="h-full flex justify-center items-center ">
-        <div className="bg-[#fafafa]  shadow border home h-[430px] pb-12 w-[1000px] rounded-lg mt-5">
+        <div className="bg-[#fafafa]  shadow border home h-[480px] pb-12 w-[1000px] rounded-lg mt-5">
           <div className="h-full flex justify-center items-center px-4 ">
             <div className=" section group  ">
               <div className=" col span_1_of_3">
@@ -235,6 +241,32 @@ function Sellerhome() {
                     <option>Coimbatore</option>
                     <option>Chennai</option>
                   </select>
+                </div>
+              </div>
+              <div className="section group">
+                <div className="flex flex-col gap-2  col span_1_of_3">
+                  <label className="block text-black text-sm font-bold mb-1">
+                    Buyer GST number
+                  </label>
+                  <input
+                    maxLength={6}
+                    type="number"
+                    className="shadow appearance-none outline-none  border rounded w-full py-1 px-1 text-black"
+                    onChange={(e) => {
+                      SetOD({ ...OD, GST: e.target.value });
+                    }}
+                  />
+                </div>
+                <div className="flex flex-col gap-2 col span_1_of_3">
+                  <label className="block text-black text-sm font-bold mb-1 ">
+                    Buyer Contact Number
+                  </label>
+                  <input
+                    className="shadow appearance-none outline-none  border rounded w-full py-1 px-1 text-black"
+                    onChange={(e) => {
+                      SetOD({ ...OD, Bnumber: e.target.value });
+                    }}
+                  />
                 </div>
               </div>
             </div>

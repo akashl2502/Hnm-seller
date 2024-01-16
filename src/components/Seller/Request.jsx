@@ -31,6 +31,8 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import uuid from "react-uuid";
 
 function Request() {
+  toast.dismiss();
+
   const [expanded, setExpanded] = useState({ state: false, in: null });
 
   const today = moment().format("YYYY-MM-DD");

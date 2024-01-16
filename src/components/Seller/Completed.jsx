@@ -20,13 +20,14 @@ import { Orderdetails } from "../../Serverquery/Firebaseref";
 import { FiEdit } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
 function Completed() {
+
   var uid = LS.get("data").uid;
   var a =
-    LS.get("data").type == "seller"
-      ? query(Orderdetails, where("uid", "==", uid), where("status", "==", 2))
+    LS.get("data").type == 1
+      ? query(Orderdetails, where("uid", "==", uid), where("status", "==", 3))
       : query(
           Orderdetails,
-          where("buyeruid", "==", uid),
+          where("GST", "==", LS.get("data").gst),
           where("status", "==", 3)
         );
   const {
@@ -108,7 +109,7 @@ function Completed() {
                     {`${data.pincode} , ${data.city} ,${data.region}`}
                   </td>
                   <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                  {data.Vstatus ? "Delivered" : "Not Delivered"}
+                    {data.Vstatus ? "Delivered" : "Not Delivered"}
                   </td>
                   {/* <td>
                   <div className="flex justify-center items-center mr-10">

@@ -83,6 +83,8 @@ function Upcoming() {
   const [editModal, setEditModal] = useState(false);
   const [Updata, Setupdata] = useState([]);
   const [Fileimg, Setfileimg] = useState(null);
+  toast.dismiss();
+
   useEffect(() => {
     toastid.dismiss();
     // Getdata();
@@ -642,10 +644,10 @@ function Upcoming() {
                       )}
                     </td>
                     <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                      {data.VN?data.VN:"Not Available"}
+                      {data.VN ? data.VN : "Not Available"}
                     </td>
                     <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {data.DN?data.DN:"Not Available"}
+                      {data.DN ? data.DN : "Not Available"}
                     </td>
                     <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                       <div className="flex justify-center items-center gap-2">
@@ -698,7 +700,7 @@ function Upcoming() {
                       </div>
                     </td>
                   </tr>{" "}
-                  {expanded.in == index && expanded.state ? (
+                  {/* {expanded.in == index && expanded.state ? (
                     <tr>
                       <td colspan="9">
                         <div className="flex gap-4 mt-2">
@@ -767,7 +769,7 @@ function Upcoming() {
                     </tr>
                   ) : (
                     <></>
-                  )}
+                  )} */}
                 </>
               );
             })}

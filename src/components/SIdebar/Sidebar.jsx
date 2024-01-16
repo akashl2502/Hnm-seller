@@ -33,9 +33,9 @@ import {
 import { Orderdetails } from "../../Serverquery/Firebaseref";
 
 function Sidebar() {
-  var a = LS.get("data").type;
+  var a = LS.get("US");
   const SellerData = [
-    a == "seller"
+    a == 1
       ? {
           title: "Home",
           path: "/sellerhome",
@@ -43,13 +43,15 @@ function Sidebar() {
           cName: "nav-text",
         }
       : null,
-    {
-      title: "Request Records",
-      path: "/Request",
-      icon: <FaIcons.FaCartPlus />,
-      cName: "nav-text",
-    },
-    a == "seller"
+    a == 1 || a == 2
+      ? {
+          title: "Request Records",
+          path: "/Request",
+          icon: <FaIcons.FaCartPlus />,
+          cName: "nav-text",
+        }
+      : null,
+    a == 1
       ? {
           title: "Upcoming Records",
           path: "/upcoming",
@@ -58,24 +60,30 @@ function Sidebar() {
         }
       : null,
 
-    {
-      title: "Inprogress Records",
-      path: "/delivery",
-      icon: <FaIcons.FaCartPlus />,
-      cName: "nav-text",
-    },
-    {
-      title: "Transport ",
-      path: "/Transport",
-      icon: <IoIcons.IoMdPeople />,
-      cName: "nav-text",
-    },
-    {
-      title: "Completed Records",
-      path: "/completed",
-      icon: <IoIcons.IoMdPeople />,
-      cName: "nav-text",
-    },
+    a == 1 || a == 2
+      ? {
+          title: "Inprogress Records",
+          path: "/delivery",
+          icon: <FaIcons.FaCartPlus />,
+          cName: "nav-text",
+        }
+      : null,
+    a == 3
+      ? {
+          title: "Transport ",
+          path: "/Transport",
+          icon: <IoIcons.IoMdPeople />,
+          cName: "nav-text",
+        }
+      : null,
+    a == 1 || a == 2
+      ? {
+          title: "Completed Records",
+          path: "/completed",
+          icon: <IoIcons.IoMdPeople />,
+          cName: "nav-text",
+        }
+      : null,
   ];
   const [show, setShow] = useState(false);
   const navigate = useNavigate();

@@ -35,17 +35,21 @@ function Newuser() {
 
     if (notesList.length != 0) {
       LS.save("data", notesList[0]);
-      console.log(notesList[0].type);
-      if (notesList[0].type == "buyer") {
+      if (notesList[0].type == 2) {
         navigate("../delivery");
-      } else {
+      } else if (notesList[0].type == 1) {
         navigate("../sellerhome");
+      } else if (notesList[0].type == 3) {
+        navigate("../Transport");
       }
     }
     Setloading(false);
   };
   const [SP] = useSearchParams();
   const uid = SP.get("uid") ?? LS.get("uid");
+  const type = SP.get("US") ?? LS.get("US");
+  const cusid = SP.get("cusid") ?? LS.get("cusid");
+
   var a = query(Masteruserdetails, where("uid", "==", uid));
 
   const [Loading, Setloading] = useState(true);
@@ -53,10 +57,11 @@ function Newuser() {
     name: "",
     company: "",
     email: "",
-    mob: "",
+    mob: null,
     gst: "",
-    type: "buyer",
+    type: type,
     uid: uid,
+    cusid: cusid,
   });
   const navigate = useNavigate();
   const Toastid = Globaltoast;
@@ -65,10 +70,11 @@ function Newuser() {
       Newdata.name.length != 0 &&
       Newdata.company.length != 0 &&
       Newdata.email.length != 0 &&
-      Newdata.gst.length != 0 &&
-      Newdata.mob.length == 10
+      Newdata.gst.length == 15 &&
+      Newdata.mob.toString().length == 10
     ) {
       e.preventDefault();
+      console.log(Newdata);
 
       await addDoc(Masteruserdetails, Newdata).then(() => {
         LS.save("data", Newdata);
@@ -82,9 +88,9 @@ function Newuser() {
         Toastid.error("Please Enter Company", { id: Toastid });
       } else if (Newdata.email.length == 0) {
         Toastid.error("Please Enter Email Id", { id: Toastid });
-      } else if (Newdata.gst.length == 0) {
+      } else if (Newdata.gst.length != 15) {
         Toastid.error("Please Enter GST", { id: Toastid });
-      } else if (Newdata.mob.length != 10) {
+      } else if (Newdata.mob.toString().length != 10) {
         Toastid.error("Please Enter Valid Mobile Number", { id: Toastid });
       }
     }
@@ -152,39 +158,27 @@ function Newuser() {
                       type="text"
                       placeholder="Mobile No"
                       onChange={(e) => {
-                        Setnewdata({ ...Newdata, mob: e.target.value });
+                        Setnewdata({
+                          ...Newdata,
+                          mob: parseInt(e.target.value),
+                        });
                       }}
                     />
                   </div>
                 </div>
               </div>
               <div className="w-full flex gap-10 mt-5">
-                <div className="w-half mt-5 px-10 mr-10 ml-[-2rem]">
-                  <label>GST No</label>
-                  <div clasNames="text-input">
+                <div className="w-full">
+                  <label>GST Number</label>
+                  <div className="text-input">
                     <i className="ri-user-fill"></i>
                     <input
                       type="text"
-                      placeholder="GST"
+                      placeholder="Email Id"
                       onChange={(e) => {
                         Setnewdata({ ...Newdata, gst: e.target.value });
                       }}
                     />
-                  </div>
-                </div>
-                <div className="w-half mt-5 px-10 mr-10 ml-[-2rem]">
-                  <label>User Type</label>
-                  <div clasNames="text-input">
-                    <i className="ri-user-fill"></i>
-                    <select
-                      onChange={(e) => {
-                        Setnewdata({ ...Newdata, type: e.target.value });
-                      }}
-                    >
-                      <option>buyer</option>
-                      <option>seller</option>
-                      <option>transporter</option>
-                    </select>
                   </div>
                 </div>
               </div>

@@ -39,128 +39,65 @@ import {
 } from "../../Serverquery/Firebaseref";
 import { Globaltoast, LS } from "../../constants/Reusedfunctopn";
 import * as BootstrapIcons from "react-icons/bs";
-const Glassmorphismbox = () => {
-  const [change, setChange] = useState(false);
-  const [forget, setForget] = useState(false);
-  const [OTP, setOTP] = useState("");
-  const [Loading, Setloading] = useState(false);
-  const [Email, Setemail] = useState("");
-  const [Pass, Setpass] = useState("");
-  const [Otpbool2, Setotpbool2] = useState(false);
-  const navigate = useNavigate();
-  const countryCode = "+91";
-  const [expandForm, setExpandForm] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState(countryCode);
-  const [Admindata, Setadmindata] = useState([]);
-  const [Userdata, Setuserdata] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+function Glassmorphismbox() {
   const toastId = Globaltoast;
-  const {
-    data: seller,
-    isLoading: uload,
-    isError: uerror,
-  } = useFirestoreQuery(
-    ["seller"],
-    sellerref,
-    { subscribe: true },
-    {
-      onSuccess: (snapshot) => {
-        var a = snapshot.docs.map((docSnapshot) => {
-          const data = { ...docSnapshot.data(), id: docSnapshot.id };
-          return data;
-        });
-        Setuserdata(a);
-      },
-    }
-  );
-  useEffect(() => {
-    toastId.dismiss();
-  }, []);
-  const generateRecaptcha = () => {
-    window.recaptchaVerifier = new RecaptchaVerifier(
-      "recaptcha-container",
-      {
-        size: "invisible",
-        callback: (response) => {},
-        "expired-callback": () => {},
-      },
+  const [userdata, Setuserdata] = useState({ cusid: null, password: null });
+  const [Loading, Setloading] = useState(false);
+  const navigate = useNavigate();
 
-      Authentication
-    );
-  };
-
-  const verifyOTP = (e) => {
-    if (e.length == 6) {
-      toastId.loading("Verifying Otp Please Wait .....", {
-        id: toastId,
-      });
-      let confirmationResult = window.confirmationResult;
-      confirmationResult
-        .confirm(e)
-        .then((result) => {
-          //setload(false);
-          const user = result.user.uid;
-          toast.success("Successfully Login", { id: toastId });
-          LS.save("uid", user);
-          LS.save("LB", true);
-          LS.save("US", "seller");
-          navigate({
-            pathname: "../newuser",
-            search: createSearchParams({
-              uid: user,
-            }).toString(),
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error instanceof FirebaseError) {
-            toastId.error(error.code, { id: toastId });
-          }
-        });
-    } else {
-    }
-  };
-  const requestOTP = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    var check = Userdata.find((data) => `+91${data.number}` == phoneNumber);
-    if (phoneNumber.length >= 12) {
-      if (check) {
-        try {
-          setChange(true);
-          setExpandForm(true);
-          generateRecaptcha();
-          toastId.success(`Otp Has Been Sent to ${phoneNumber}`, {
-            id: toastId,
-          });
-          let appVerifier = window.recaptchaVerifier;
 
-          signInWithPhoneNumber(Authentication, phoneNumber, appVerifier)
-            .then((confirmationResult) => {
-              window.confirmationResult = confirmationResult;
-            })
-            .catch((error) => {
-              if (error instanceof FirebaseError) {
-                toastId.error(error.code, { id: toastId });
-              }
-              console.log(error);
-            });
-        } catch (e) {
-          console.log(e);
-        }
-      } else {
-        toastId.error("Access Denied", { id: toastId });
+    try {
+      Setloading(true);
+      const userQuery = query(
+        collection(Db, "user"),
+        where("cusid", "==", userdata.cusid)
+      );
+      const querySnapshot = await getDocs(userQuery);
+      if (querySnapshot.empty) {
+        toast.error("User not found", { id: toastId });
+        Setloading(false);
+
+        return;
       }
-    } else {
-      toastId.error("Enter Valid Mobile Number", { id: toastId });
+      const userDoc = querySnapshot.docs[0];
+      const storedPassword = userDoc.data().password;
+      const uid = userDoc.data().uid;
+      const type = userDoc.data().type;
+      const cusid = userDoc.data().cusid;
+
+      if (userdata.password !== storedPassword) {
+        toast.error("Incorrect password", { id: toastId });
+        Setloading(false);
+
+        return;
+      }
+      if (userdata.password == storedPassword) {
+        LS.save("uid", uid);
+        LS.save("LB", true);
+        LS.save("US", type);
+        LS.save("cusid", cusid);
+        Setloading(false);
+        navigate({
+          pathname: "../newuser",
+          search: createSearchParams({
+            uid: uid,
+            type: type,
+            cusid: cusid,
+          }).toString(),
+        });
+        toast.success("Login successful", { id: toastId });
+        console.log(userDoc.data());
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      Setloading(false);
+
+      toast.error("An error occurred during login", { id: toastId });
     }
   };
-
-  const Onclick = (e) => {
-    e.preventDefault();
-    requestOTP(e);
-  };
-
-  if (uload || Loading) {
+  if (Loading) {
     return (
       <div class="loader flex justify-center items-center h-screen">
         <div data-glitch="Loading..." class="glitch">
@@ -169,7 +106,6 @@ const Glassmorphismbox = () => {
       </div>
     );
   }
-
   return (
     <div class="flex justify-center items-center">
       <div class="row full-height justify-content-center">
@@ -185,21 +121,18 @@ const Glassmorphismbox = () => {
                 <div class="card-front">
                   <div class="center-wrap">
                     <div class="section text-center">
-                      <form onSubmit={requestOTP}>
-                        <h4 class="mb-10 pb-3 text-white">
-                          Enter Your Phone Number
-                        </h4>
+                      <form>
+                        <h4 class="mb-10 pb-3 text-white">Customer Login</h4>
                         <div class="form-group">
                           <input
-                            type="tel"
-                            name="logname"
+                            name="customer_id"
                             class="form-style mb-2"
-                            placeholder="Mobile Number"
-                            id="logname"
-                            autocomplete="off"
-                            value={phoneNumber}
+                            placeholder="Id"
                             onChange={(e) => {
-                              setPhoneNumber(e.target.value);
+                              Setuserdata({
+                                ...userdata,
+                                cusid: parseInt(e.target.value),
+                              });
                             }}
                           />
                           <UilUserMd
@@ -208,51 +141,36 @@ const Glassmorphismbox = () => {
                             color="#ffeba7"
                           />
                         </div>
-                        {change ? (
-                          <div>
-                            <div class="form-group">
-                              <input
-                                type="text"
-                                name="logname"
-                                class="form-style mt-2"
-                                placeholder="Enter OTP"
-                                id="logname"
-                                autocomplete="off"
-                                value={OTP}
-                                onChange={(e) => {
-                                  setOTP(e.target.value);
-                                }}
-                              />
-                              <UilMobileAndroid
-                                size="25"
-                                class="input-icon mt-2"
-                                color="#ffeba7"
-                              />
-                            </div>
+                        <div class="form-group">
+                          <input
+                            type="password"
+                            class="form-style mb-2"
+                            placeholder="password"
+                            onChange={(e) => {
+                              Setuserdata({
+                                ...userdata,
+                                password: e.target.value,
+                              });
+                            }}
+                          />
+                          <UilUserMd
+                            size="25"
+                            class="input-icon"
+                            color="#ffeba7"
+                          />
+                        </div>
 
-                            <a
-                              href="#"
-                              class="btn mt-7"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                verifyOTP(OTP);
-                              }}
-                            >
-                              Verify Otp
-                            </a>
-                          </div>
-                        ) : (
-                          <></>
-                        )}
-
-                        <a
-                          href="#"
-                          type="submit"
-                          class={`${change ? "hidden" : "btn mt-7 "}`}
-                          onClick={(e) => Onclick(e)}
-                        >
-                          Request Otp
-                        </a>
+                        <div>
+                          <a
+                            href="#"
+                            class="btn mt-7"
+                            onClick={(e) => {
+                              handleLogin(e);
+                            }}
+                          >
+                            Login
+                          </a>
+                        </div>
                       </form>
                     </div>
                   </div>
@@ -268,6 +186,6 @@ const Glassmorphismbox = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Glassmorphismbox;

@@ -21,12 +21,13 @@ import { FiEdit } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
 const Delivery = () => {
   var uid = LS.get("uid");
+  console.log(LS.get("data").type)
   var a =
-    LS.get("data").type == "seller"
+    LS.get("data").type == 1
       ? query(Orderdetails, where("uid", "==", uid), where("status", "==", 2))
       : query(
           Orderdetails,
-          where("buyeruid", "==", uid),
+          where("GST", "==", LS.get("data").gst),
           where("status", "==", 2)
         );
   const {

@@ -54,7 +54,12 @@ function Driver() {
           var did;
           var inid = [];
           a.map((d) => {
-            if (d != "id" && d != "metadata" && d != "verify") {
+            if (
+              d != "id" &&
+              d != "metadata" &&
+              d != "verify" &&
+              d != "transporteruid"
+            ) {
               ID.push(indata[d]);
               inid.push(indata[d].id);
             } else if (d == "metadata") {
@@ -166,21 +171,7 @@ function Driver() {
                 </div>
                 {/*body*/}
                 <div className="flex w-full  flex-col gap-10 p-8 justify-center items-start">
-                  <div className="w-full flex flex-col gap-2">
-                    <div className="text-left flex justify-start items-center gap-2">
-                      <label htmlFor="" className="text-xl">
-                        OTP{" "}
-                      </label>
-                      <BsPhone size={20} />
-                    </div>
-                    <div className="w-full">
-                      <input
-                        className="bg-gray-100 border w-full border-black rounded-sm py-2"
-                        type="text"
-                        onChange={(e) => {}}
-                      />
-                    </div>
-                  </div>
+                  <h3 className="">Are you sure to change status to be verified</h3>
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">

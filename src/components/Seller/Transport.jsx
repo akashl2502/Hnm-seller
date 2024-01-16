@@ -15,12 +15,15 @@ import {
   useFirestoreQueryData,
 } from "@react-query-firebase/firestore";
 import { Db } from "../../Firebase/Firebase-Config";
-import { LS } from "../../constants/Reusedfunctopn";
+import { LS, websitelink } from "../../constants/Reusedfunctopn";
 import { Orderdetails, Transportref } from "../../Serverquery/Firebaseref";
 import { BsTruck, BsPhone } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
+import { MdContentCopy } from "react-icons/md";
+
 import { useEffect } from "react";
+import { data } from "autoprefixer";
 function Transport() {
   const [Dataid, Setdataid] = useState("");
   const [Innerdataid, Setinnerdataid] = useState([]);
@@ -32,15 +35,15 @@ function Transport() {
 
   const Getdata = async () => {
     Setloading(true);
-    var a = query(Transportref);
-    await getDocs(a).then((res) => {
-      var a = res.docs.map((docSnapshot) => {
+    const uid = LS.get("uid");
+    const q = query(Transportref, where("transporteruid", "==", uid));
+    await getDocs(q).then((res) => {
+      const a = res.docs.map((docSnapshot) => {
         const data = { ...docSnapshot.data(), id: docSnapshot.id };
         return data;
       });
-
+      console.log(a);
       Orderdata({ dataincome: a });
-      //   Setdata(a);
       Setloading(false);
     });
   };
@@ -125,6 +128,14 @@ function Transport() {
       </div>
     );
   }
+  const copyToClipboard = (text) => {
+    const textField = document.createElement("textarea");
+    textField.innerText = text;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand("copy");
+    textField.remove();
+  };
   return (
     <div class="block w-[100%] overflow-hidden h-screen home pt-20">
       {showModal ? (
@@ -221,7 +232,12 @@ function Transport() {
           var did;
           var inid = [];
           a.map((d) => {
-            if (d != "id" && d != "metadata" && d != "verify") {
+            if (
+              d != "id" &&
+              d != "metadata" &&
+              d != "verify" &&
+              d != "transporteruid"
+            ) {
               ID.push(td[d]);
               inid.push(td[d].id);
             } else if (d == "metadata") {
@@ -231,6 +247,7 @@ function Transport() {
               did = td[d];
             }
           });
+          console.log(ID);
           return (
             <>
               <div className="flex flex-col justify-end items-end gap-5">
@@ -253,7 +270,9 @@ function Transport() {
                       <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                         Driver Number
                       </th>
-
+                      <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                        link
+                      </th>
                       {/* <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
               Action
             </th> */}
@@ -283,6 +302,17 @@ function Transport() {
                               ? metadata[1]
                               : "Driver number needed to be added"}
                           </td>
+                          <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                            <MdContentCopy
+                              onClick={(e) => {
+                                const url = `${websitelink}/driver?id=${td.id}`;
+                                copyToClipboard(url);
+                                toast.success("Link copied to clipboard", {
+                                  id: toastid,
+                                });
+                              }}
+                            />
+                          </td>
                         </tr>
                       );
                     })}
@@ -290,7 +320,7 @@ function Transport() {
                 </table>
                 {!metadata[0] ? (
                   <button
-                    className="px-2 py-1 shadow-md bg-green-500 rounded-md"
+                    className="px-2 py-1 shadow-md bg-green-500 rounded-md cursor-pointer"
                     onClick={(e) => {
                       setShowModal(true);
                       Setdataid(did);
