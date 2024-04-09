@@ -163,7 +163,6 @@ function Sellerhome() {
 
   return (
     <div className="h-screen w-full home ">
-    
       <div className="h-full flex justify-center items-center ">
         <div className="bg-[#fafafa]  shadow border home h-[480px] pb-12 w-[1000px] rounded-lg mt-5">
           <div className="h-full flex justify-center items-center px-4 ">
@@ -249,8 +248,8 @@ function Sellerhome() {
                     Buyer GST number
                   </label>
                   <input
-                    maxLength={6}
-                    type="number"
+                    maxLength={15}
+                    type="text"
                     className="shadow appearance-none outline-none  border rounded w-full py-1 px-1 text-black"
                     onChange={(e) => {
                       SetOD({ ...OD, GST: e.target.value });
