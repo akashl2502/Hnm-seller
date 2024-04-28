@@ -5,4 +5,4 @@ export const LS = localstorageEncrypt.init(
   "Groups_Seller_production",
   "groups"
 );
-export const websitelink = "https://hopnmove.com/";
+export const websitelink = "https://hopnmove.com";
