@@ -142,7 +142,7 @@ function Newuser() {
             id: Toastid,
           });
 
-          setShowModal(false)
+          setShowModal(false);
         })
         .catch((err) => {
           Toastid.error("Something error occured please try again later", {
@@ -160,16 +160,20 @@ function Newuser() {
   };
   return (
     <div className="user">
-      {showmodel ? (
-        <>
-          <div className="justify-center  items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-[400px] my-6 mx-auto max-w-3xl">
-              {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">Change password</h3>
-                  {/* <button
+      {!Loading ? (
+        <div className="container">
+          {showmodel ? (
+            <>
+              <div className="justify-center  items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                <div className="relative w-[400px] my-6 mx-auto max-w-3xl">
+                  {/*content*/}
+                  <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                    {/*header*/}
+                    <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                      <h3 className="text-3xl font-semibold">
+                        Change password
+                      </h3>
+                      {/* <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
                   >
@@ -177,43 +181,43 @@ function Newuser() {
                       ×
                     </span>
                   </button> */}
-                </div>
-                {/*body*/}
-                <div className="flex w-full  flex-col gap-10 p-8 justify-center items-start">
-                  <div className=" flex w-full flex-col gap-2">
-                    <div className="text-left flex gap-2 justify-start items-center">
-                      <label htmlFor="">Password</label>
-                      <RiLockPasswordFill />
                     </div>
-                    <div className="w-full">
-                      <input
-                        className="bg-gray-100 w-full border border-black rounded-md h-[2.3rem]"
-                        type="password"
-                        onChange={(e) => {
-                          Setpassword(e.target.value);
-                        }}
-                      />
+                    {/*body*/}
+                    <div className="flex w-full  flex-col gap-10 p-8 justify-center items-start">
+                      <div className=" flex w-full flex-col gap-2">
+                        <div className="text-left flex gap-2 justify-start items-center">
+                          <label htmlFor="">Password</label>
+                          <RiLockPasswordFill />
+                        </div>
+                        <div className="w-full">
+                          <input
+                            className="bg-gray-100 w-full border border-black rounded-md h-[2.3rem]"
+                            type="password"
+                            onChange={(e) => {
+                              Setpassword(e.target.value);
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className=" flex w-full flex-col gap-2">
+                        <div className="text-left flex gap-2 justify-start items-center">
+                          <label htmlFor="">Confirm Password</label>
+                          <RiLockPasswordFill />
+                        </div>
+                        <div className="w-full">
+                          <input
+                            className="bg-gray-100 w-full border border-black rounded-md h-[2.3rem]"
+                            type="password"
+                            onChange={(e) => {
+                              setconfirmpassword(e.target.value);
+                            }}
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className=" flex w-full flex-col gap-2">
-                    <div className="text-left flex gap-2 justify-start items-center">
-                      <label htmlFor="">Confirm Password</label>
-                      <RiLockPasswordFill />
-                    </div>
-                    <div className="w-full">
-                      <input
-                        className="bg-gray-100 w-full border border-black rounded-md h-[2.3rem]"
-                        type="password"
-                        onChange={(e) => {
-                          setconfirmpassword(e.target.value);
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-                {/*footer*/}
-                <div className="flex items-center justify-end p-3 border-t border-solid border-slate-200 rounded-b">
-                  {/* <button
+                    {/*footer*/}
+                    <div className="flex items-center justify-end p-3 border-t border-solid border-slate-200 rounded-b">
+                      {/* <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => {
@@ -222,37 +226,35 @@ function Newuser() {
                   >
                     Close
                   </button> */}
-                  <button
-                    className="text-emerald-500  active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded  hover: outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={async () => {
-                      if (Password === confirmPassword) {
-                        if (!validatePassword(Password)) {
-                          Toastid.error(
-                            "Password must be at least 8 characters long and contain at least one capital letter and one number.",
-                            { id: Toastid }
-                          );
-                        } else {
-                          var enpassword = await encrypt_password(Password);
-                          console.log(enpassword);
-                          await updateUserPassword(uid, enpassword);
-                        }
-                      } else {
-                        Toastid.error("Passwords do not match.");
-                      }
-                    }}
-                  >
-                    Add
-                  </button>
+                      <button
+                        className="text-emerald-500  active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded  hover: outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={async () => {
+                          if (Password === confirmPassword) {
+                            if (!validatePassword(Password)) {
+                              Toastid.error(
+                                "Password must be at least 8 characters long and contain at least one capital letter and one number.",
+                                { id: Toastid }
+                              );
+                            } else {
+                              var enpassword = await encrypt_password(Password);
+                              console.log(enpassword);
+                              await updateUserPassword(uid, enpassword);
+                            }
+                          } else {
+                            Toastid.error("Passwords do not match.");
+                          }
+                        }}
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
-      ) : null}
-      {!Loading ? (
-        <div className="container">
+              <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+            </>
+          ) : null}
           <div class="design">
             <div className="pill-1 rotate-45"></div>
             <div className="pill-2 rotate-45"></div>
