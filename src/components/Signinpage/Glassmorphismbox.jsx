@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { loadFull } from "tsparticles";
+import bcrypt from "bcryptjs";
+
 import { useNavigate, createSearchParams } from "react-router-dom";
 import Tilt from "react-parallax-tilt";
 import { UilEnvelopeOpen } from "@iconscout/react-unicons";
@@ -50,6 +52,7 @@ function Glassmorphismbox() {
 
     try {
       Setloading(true);
+      console.log(userdata);
       const userQuery = query(
         collection(Db, "user"),
         where("cusid", "==", userdata.cusid)
@@ -67,13 +70,14 @@ function Glassmorphismbox() {
       const type = userDoc.data().type;
       const cusid = userDoc.data().cusid;
 
-      if (userdata.password !== storedPassword) {
+      const isMatch = await bcrypt.compare(userdata.password, storedPassword);
+      if (!isMatch) {
         toast.error("Incorrect password", { id: toastId });
         Setloading(false);
 
         return;
       }
-      if (userdata.password == storedPassword) {
+      if (isMatch) {
         LS.save("uid", uid);
         LS.save("LB", true);
         LS.save("US", type);
@@ -131,7 +135,7 @@ function Glassmorphismbox() {
                             onChange={(e) => {
                               Setuserdata({
                                 ...userdata,
-                                cusid: parseInt(e.target.value),
+                                cusid: e.target.value,
                               });
                             }}
                           />

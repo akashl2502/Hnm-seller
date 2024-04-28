@@ -118,7 +118,7 @@ const Delivery = () => {
                     {data.dod}
                   </td>
                   <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                    {`${data.city} ,${data.region} ,${data.pincode}`}
+                    {`${data.city},${data.pincode}`}
                   </td>
                   <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                     {data.VN ? data.VN : "Not Available"}

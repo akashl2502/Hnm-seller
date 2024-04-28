@@ -39,8 +39,8 @@ function Sellerhome() {
     quantity: "",
     dod: "",
     pincode: "",
-    city: "Coimbatore",
-    region: "",
+    city: "Abu Road",
+    region: " ",
     status: 0,
     uid: LS.get("uid"),
     read: 0,
@@ -160,7 +160,25 @@ function Sellerhome() {
       }
     }
   };
-
+  const cityname = [
+    "Jodhpur",
+    "Sumerpur",
+    "Barmer",
+    "Balothra",
+    "Deesa",
+    "Abu Road",
+    "Hyderabad",
+    "Belgavi",
+    "Vijayapura",
+    "Amritsar",
+    "Bellary",
+    "Shri Ganganagar",
+    "Hanumangarh",
+    "Phagwara",
+    "Jammu",
+    "Mumbai",
+    "Jaipur",
+  ];
   return (
     <div className="h-screen w-full home ">
       <div className="h-full flex justify-center items-center ">
@@ -216,7 +234,7 @@ function Sellerhome() {
                     }}
                   />
                 </div>
-                <div className="flex flex-col gap-2 col span_1_of_3">
+                {/* <div className="flex flex-col gap-2 col span_1_of_3">
                   <label className="block text-black text-sm font-bold mb-1 ">
                     Region
                   </label>
@@ -226,7 +244,7 @@ function Sellerhome() {
                       SetOD({ ...OD, region: e.target.value });
                     }}
                   />
-                </div>
+                </div> */}
                 <div className="flex flex-col gap-2 col span_1_of_3">
                   <label className="block text-black text-sm font-bold mb-1 ">
                     City
@@ -237,12 +255,11 @@ function Sellerhome() {
                       SetOD({ ...OD, city: e.target.value });
                     }}
                   >
-                    <option>Coimbatore</option>
-                    <option>Chennai</option>
+                    {cityname.sort().map((city) => {
+                      return <option>{city}</option>;
+                    })}
                   </select>
                 </div>
-              </div>
-              <div className="section group">
                 <div className="flex flex-col gap-2  col span_1_of_3">
                   <label className="block text-black text-sm font-bold mb-1">
                     Buyer GST number
@@ -256,6 +273,21 @@ function Sellerhome() {
                     }}
                   />
                 </div>
+              </div>
+              <div className="section group">
+                {/* <div className="flex flex-col gap-2  col span_1_of_3">
+                  <label className="block text-black text-sm font-bold mb-1">
+                    Buyer GST number
+                  </label>
+                  <input
+                    maxLength={15}
+                    type="text"
+                    className="shadow appearance-none outline-none  border rounded w-full py-1 px-1 text-black"
+                    onChange={(e) => {
+                      SetOD({ ...OD, GST: e.target.value });
+                    }}
+                  />
+                </div> */}
                 <div className="flex flex-col gap-2 col span_1_of_3">
                   <label className="block text-black text-sm font-bold mb-1 ">
                     Buyer Contact Number
@@ -267,18 +299,20 @@ function Sellerhome() {
                     }}
                   />
                 </div>
+                <div>
+                  <div className="w-full flex justify-center items-center ">
+                    <div className="text-center  w-[10%] items-center  text-white px-2 py-2  text-sm rounded-lg bg-[#1717ab] gap-2 max-xs:w-[40%] max-sm:w-[50%]">
+                      <button
+                        onClick={(e) => {
+                          Newrequest(e);
+                        }}
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="w-full flex justify-center items-center ">
-            <div className="text-center  w-[10%] items-center  text-white px-2 py-2  text-sm rounded-lg bg-[#1717ab] gap-2 max-xs:w-[40%] max-sm:w-[50%]">
-              <button
-                onClick={(e) => {
-                  Newrequest(e);
-                }}
-              >
-                Submit
-              </button>
             </div>
           </div>
         </div>

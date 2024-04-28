@@ -43,7 +43,7 @@ function Upcoming() {
     dod: "",
     pincode: "",
     city: "",
-    region: "",
+    region: " ",
     status: 0,
   });
   var uid = LS.get("uid");
@@ -69,7 +69,7 @@ function Upcoming() {
     dod: "",
     pincode: "",
     city: "",
-    region: "",
+    region: " ",
     status: 0,
     uid: LS.get("uid"),
     read: 0,
@@ -145,7 +145,7 @@ function Upcoming() {
                         dod: "",
                         pincode: "",
                         city: "",
-                        region: "",
+                        region: " ",
                         status: 0,
                         uid: LS.get("uid"),
                       });
@@ -172,7 +172,7 @@ function Upcoming() {
                         dod: "",
                         pincode: "",
                         city: "",
-                        region: "",
+                        region: " ",
                         status: 0,
                         uid: LS.get("uid"),
                       });
@@ -249,7 +249,7 @@ function Upcoming() {
             dod: "",
             pincode: "",
             city: "",
-            region: "",
+            region: " ",
             status: 0,
             uid: LS.get("uid"),
           });
@@ -299,7 +299,7 @@ function Upcoming() {
             dod: "",
             pincode: "",
             city: "",
-            region: "",
+            region: " ",
             status: 0,
             uid: LS.get("uid"),
           });
@@ -599,7 +599,7 @@ function Upcoming() {
                       {data.dod}
                     </td>
                     <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                      {`${data.pincode} ,${data.region} ,${data.city} `}
+                      {`${data.pincode},${data.city} `}
                     </td>
                     <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                       {data.file1 == false ? (

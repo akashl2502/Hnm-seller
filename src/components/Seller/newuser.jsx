@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import bg from "../../assets/bbblurry.svg";
 import "./seller.css";
+import bcrypt from "bcryptjs";
+
 import {
   useNavigate,
   createSearchParams,
@@ -21,9 +23,13 @@ import {
   query,
   updateDoc,
   deleteDoc,
+  collection,
   where,
 } from "firebase/firestore";
+import { RiLockPasswordFill } from "react-icons/ri";
+
 import { data } from "autoprefixer";
+import { Db } from "../../Firebase/Firebase-Config";
 function Newuser() {
   useEffect(() => {
     getdata();
@@ -53,6 +59,10 @@ function Newuser() {
   var a = query(Masteruserdetails, where("uid", "==", uid));
 
   const [Loading, Setloading] = useState(true);
+  const [showmodel, setShowModal] = useState(true);
+  const [Password, Setpassword] = useState("");
+  const [confirmPassword, setconfirmpassword] = useState("");
+
   const [Newdata, Setnewdata] = useState({
     name: "",
     company: "",
@@ -95,8 +105,152 @@ function Newuser() {
       }
     }
   };
+  const encrypt_password = async (password) => {
+    try {
+      const saltRounds = 10;
+      const salt = await bcrypt.genSalt(saltRounds);
+      const hash = await bcrypt.hash(password, salt);
+      return hash.toString();
+    } catch (error) {
+      console.error("Error while hashing the password:", error);
+    }
+  };
+
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+    return passwordRegex.test(password);
+  };
+  const updateUserPassword = async (uid, newPassword) => {
+    Toastid.loading("Password is being updated please wait.....", {
+      id: Toastid,
+    });
+    try {
+      const userQuery = query(collection(Db, "user"), where("uid", "==", uid));
+      const querySnapshot = await getDocs(userQuery);
+      if (querySnapshot.empty) {
+        toast.error("User not found", { id: Toastid });
+        Setloading(false);
+
+        return;
+      }
+      const userDoc = querySnapshot.docs[0];
+
+      const docRef = doc(Db, "user", userDoc.id);
+      await updateDoc(docRef, { password: newPassword })
+        .then(() => {
+          Toastid.success("Password has been successfully updated", {
+            id: Toastid,
+          });
+
+          setShowModal(false)
+        })
+        .catch((err) => {
+          Toastid.error("Something error occured please try again later", {
+            id: Toastid,
+          });
+          location.reload();
+        });
+    } catch (error) {
+      Toastid.error("Something error occured please try again later", {
+        id: Toastid,
+      });
+      location.reload();
+      console.error("Error updating password:", error);
+    }
+  };
   return (
     <div className="user">
+      {showmodel ? (
+        <>
+          <div className="justify-center  items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="relative w-[400px] my-6 mx-auto max-w-3xl">
+              {/*content*/}
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                {/*header*/}
+                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                  <h3 className="text-3xl font-semibold">Change password</h3>
+                  {/* <button
+                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    onClick={() => setShowModal(false)}
+                  >
+                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      ×
+                    </span>
+                  </button> */}
+                </div>
+                {/*body*/}
+                <div className="flex w-full  flex-col gap-10 p-8 justify-center items-start">
+                  <div className=" flex w-full flex-col gap-2">
+                    <div className="text-left flex gap-2 justify-start items-center">
+                      <label htmlFor="">Password</label>
+                      <RiLockPasswordFill />
+                    </div>
+                    <div className="w-full">
+                      <input
+                        className="bg-gray-100 w-full border border-black rounded-md h-[2.3rem]"
+                        type="password"
+                        onChange={(e) => {
+                          Setpassword(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className=" flex w-full flex-col gap-2">
+                    <div className="text-left flex gap-2 justify-start items-center">
+                      <label htmlFor="">Confirm Password</label>
+                      <RiLockPasswordFill />
+                    </div>
+                    <div className="w-full">
+                      <input
+                        className="bg-gray-100 w-full border border-black rounded-md h-[2.3rem]"
+                        type="password"
+                        onChange={(e) => {
+                          setconfirmpassword(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/*footer*/}
+                <div className="flex items-center justify-end p-3 border-t border-solid border-slate-200 rounded-b">
+                  {/* <button
+                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => {
+                      setShowModal(false)
+                    }}
+                  >
+                    Close
+                  </button> */}
+                  <button
+                    className="text-emerald-500  active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded  hover: outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={async () => {
+                      if (Password === confirmPassword) {
+                        if (!validatePassword(Password)) {
+                          Toastid.error(
+                            "Password must be at least 8 characters long and contain at least one capital letter and one number.",
+                            { id: Toastid }
+                          );
+                        } else {
+                          var enpassword = await encrypt_password(Password);
+                          console.log(enpassword);
+                          await updateUserPassword(uid, enpassword);
+                        }
+                      } else {
+                        Toastid.error("Passwords do not match.");
+                      }
+                    }}
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
       {!Loading ? (
         <div className="container">
           <div class="design">
@@ -173,8 +327,9 @@ function Newuser() {
                   <div className="text-input">
                     <i className="ri-user-fill"></i>
                     <input
+                      maxLength={15}
                       type="text"
-                      placeholder="Email Id"
+                      placeholder="GST Number"
                       onChange={(e) => {
                         Setnewdata({ ...Newdata, gst: e.target.value });
                       }}
