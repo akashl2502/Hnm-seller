@@ -42,6 +42,8 @@ import {
 import { Globaltoast, LS } from "../../constants/Reusedfunctopn";
 import * as BootstrapIcons from "react-icons/bs";
 function Glassmorphismbox() {
+  useEffect(() => {
+  }, []);
   const toastId = Globaltoast;
   const [userdata, Setuserdata] = useState({ cusid: null, password: null });
   const [Loading, Setloading] = useState(false);
