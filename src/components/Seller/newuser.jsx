@@ -39,16 +39,16 @@ function Newuser() {
     const notesSnapshot = await getDocs(a);
     const notesList = notesSnapshot.docs.map((doc) => doc.data());
     console.log(notesList);
-    // if (notesList.length != 0) {
-    //   LS.save("data", notesList[0]);
-    //   if (notesList[0].type == 2) {
-    //     navigate("../delivery");
-    //   } else if (notesList[0].type == 1) {
-    //     navigate("../sellerhome");
-    //   } else if (notesList[0].type == 3) {
-    //     navigate("../Transport");
-    //   }
-    // }
+    if (notesList.length != 0) {
+      LS.save("data", notesList[0]);
+      if (notesList[0].type == 2) {
+        navigate("../delivery");
+      } else if (notesList[0].type == 1) {
+        navigate("../sellerhome");
+      } else if (notesList[0].type == 3) {
+        navigate("../Transport");
+      }
+    }
     Setloading(false);
   };
   const [SP] = useSearchParams();
