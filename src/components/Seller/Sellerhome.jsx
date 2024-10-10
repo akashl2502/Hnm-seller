@@ -290,7 +290,7 @@ function Sellerhome() {
                 </div> */}
                 <div className="flex flex-col gap-2 col span_1_of_3">
                   <label className="block text-black text-sm font-bold mb-1 ">
-                    Buyer Contact Number
+                    Pickup Contact Details
                   </label>
                   <input
                     className="shadow appearance-none outline-none  border rounded w-full py-1 px-1 text-black"

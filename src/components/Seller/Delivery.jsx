@@ -21,7 +21,7 @@ import { FiEdit } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
 const Delivery = () => {
   var uid = LS.get("uid");
-  console.log(LS.get("data").type)
+  console.log(LS.get("data").type);
   var a =
     LS.get("data").type == 1
       ? query(Orderdetails, where("uid", "==", uid), where("status", "==", 2))
@@ -133,8 +133,13 @@ const Delivery = () => {
                     {data.track ? (
                       <a
                         className="px-4 py-1 bg-blue-600 text-white rounded"
-                        href={data.track}
-                        target="_parent"
+                        target="_blank"
+                        href={
+                          data.track.startsWith("http://") ||
+                          data.track.startsWith("https://")
+                            ? data.track
+                            : `http://${data.track}`
+                        }
                       >
                         Track
                       </a>

@@ -38,17 +38,17 @@ function Newuser() {
   const getdata = async () => {
     const notesSnapshot = await getDocs(a);
     const notesList = notesSnapshot.docs.map((doc) => doc.data());
-
-    if (notesList.length != 0) {
-      LS.save("data", notesList[0]);
-      if (notesList[0].type == 2) {
-        navigate("../delivery");
-      } else if (notesList[0].type == 1) {
-        navigate("../sellerhome");
-      } else if (notesList[0].type == 3) {
-        navigate("../Transport");
-      }
-    }
+    console.log(notesList);
+    // if (notesList.length != 0) {
+    //   LS.save("data", notesList[0]);
+    //   if (notesList[0].type == 2) {
+    //     navigate("../delivery");
+    //   } else if (notesList[0].type == 1) {
+    //     navigate("../sellerhome");
+    //   } else if (notesList[0].type == 3) {
+    //     navigate("../Transport");
+    //   }
+    // }
     Setloading(false);
   };
   const [SP] = useSearchParams();
@@ -80,17 +80,20 @@ function Newuser() {
       Newdata.name.length != 0 &&
       Newdata.company.length != 0 &&
       Newdata.email.length != 0 &&
-      Newdata.gst.length == 15 &&
       Newdata.mob.toString().length == 10
     ) {
-      e.preventDefault();
-      console.log(Newdata);
+      if (type == 3) {
+        e.preventDefault();
+        console.log(Newdata);
 
-      await addDoc(Masteruserdetails, Newdata).then(() => {
-        LS.save("data", Newdata);
+        await addDoc(Masteruserdetails, Newdata).then(() => {
+          LS.save("data", Newdata);
 
-        navigate("../sellerhome");
-      });
+          navigate("../sellerhome");
+        });
+      } else if (Newdata.gst.length != 15) {
+        Toastid.error("Please Enter GST", { id: Toastid });
+      }
     } else {
       if (Newdata.name.length == 0) {
         Toastid.error("Please Enter Name", { id: Toastid });
@@ -323,22 +326,26 @@ function Newuser() {
                   </div>
                 </div>
               </div>
-              <div className="w-full flex gap-10 mt-5">
-                <div className="w-full">
-                  <label>GST Number</label>
-                  <div className="text-input">
-                    <i className="ri-user-fill"></i>
-                    <input
-                      maxLength={15}
-                      type="text"
-                      placeholder="GST Number"
-                      onChange={(e) => {
-                        Setnewdata({ ...Newdata, gst: e.target.value });
-                      }}
-                    />
+              {type != 3 ? (
+                <div className="w-full flex gap-10 mt-5">
+                  <div className="w-full">
+                    <label>GST Number</label>
+                    <div className="text-input">
+                      <i className="ri-user-fill"></i>
+                      <input
+                        maxLength={15}
+                        type="text"
+                        placeholder="GST Number"
+                        onChange={(e) => {
+                          Setnewdata({ ...Newdata, gst: e.target.value });
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <></>
+              )}
             </div>
             {/* <div className="w-half mt-5 px-10 mr-10 ml-[-2rem]">
             <label>GST No</label>
