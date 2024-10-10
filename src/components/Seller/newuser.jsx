@@ -84,15 +84,22 @@ function Newuser() {
     ) {
       if (type == 3) {
         e.preventDefault();
-        console.log(Newdata);
 
         await addDoc(Masteruserdetails, Newdata).then(() => {
           LS.save("data", Newdata);
 
           navigate("../sellerhome");
         });
-      } else if (Newdata.gst.length != 15) {
-        Toastid.error("Please Enter GST", { id: Toastid });
+      } else {
+        if (Newdata.gst.length != 15) {
+          Toastid.error("Please Enter GST", { id: Toastid });
+        } else {
+          await addDoc(Masteruserdetails, Newdata).then(() => {
+            LS.save("data", Newdata);
+
+            navigate("../sellerhome");
+          });
+        }
       }
     } else {
       if (Newdata.name.length == 0) {
