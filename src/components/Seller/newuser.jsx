@@ -87,6 +87,7 @@ function Newuser() {
 
         await addDoc(Masteruserdetails, Newdata).then(() => {
           LS.save("data", Newdata);
+          console.log("adding data");
 
           navigate("../sellerhome");
         });
@@ -94,6 +95,7 @@ function Newuser() {
         if (Newdata.gst.length != 15) {
           Toastid.error("Please Enter GST", { id: Toastid });
         } else {
+          console.log("adding data");
           await addDoc(Masteruserdetails, Newdata).then(() => {
             LS.save("data", Newdata);
 
