@@ -38,7 +38,6 @@ function Newuser() {
   const getdata = async () => {
     const notesSnapshot = await getDocs(a);
     const notesList = notesSnapshot.docs.map((doc) => doc.data());
-    console.log(notesList);
     if (notesList.length != 0) {
       LS.save("data", notesList[0]);
       if (notesList[0].type == 2) {
@@ -87,7 +86,6 @@ function Newuser() {
 
         await addDoc(Masteruserdetails, Newdata).then(() => {
           LS.save("data", Newdata);
-          console.log("adding data");
 
           navigate("../sellerhome");
         });
@@ -95,7 +93,6 @@ function Newuser() {
         if (Newdata.gst.length != 15) {
           Toastid.error("Please Enter GST", { id: Toastid });
         } else {
-          console.log("adding data");
           await addDoc(Masteruserdetails, Newdata).then(() => {
             LS.save("data", Newdata);
 

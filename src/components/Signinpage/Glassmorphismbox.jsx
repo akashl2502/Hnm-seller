@@ -54,7 +54,6 @@ function Glassmorphismbox() {
 
     try {
       Setloading(true);
-      console.log(userdata);
       const userQuery = query(
         collection(Db, "user"),
         where("cusid", "==", userdata.cusid)
@@ -94,7 +93,6 @@ function Glassmorphismbox() {
           }).toString(),
         });
         toast.success("Login successful", { id: toastId });
-        console.log(userDoc.data());
       }
     } catch (error) {
       console.error("Error during login:", error);

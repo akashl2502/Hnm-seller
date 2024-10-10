@@ -60,8 +60,7 @@ function Sellerhome() {
 
   useEffect(() => {
     var newdata = sessionStorage.getItem("newdata");
-    console.log(newdata);
-    console.log(LS.get("data"));
+    
     if (newdata) {
       sessionStorage.removeItem("newdata");
       toastid.success("New Request Has Been Requested", { id: toastid });

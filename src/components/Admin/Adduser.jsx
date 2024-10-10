@@ -98,9 +98,9 @@ const Adduser = () => {
                           checked={Addnew.RP[0]}
                           onChange={(e) => {
                             var a = Addnew.RP;
-                            console.log(a);
+                            
                             a[0] = !a[0];
-                            console.log(a);
+                            
                             Setaddnew({ ...Addnew, RP: a });
                           }}
                         />

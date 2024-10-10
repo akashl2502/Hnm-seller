@@ -21,7 +21,7 @@ import { FiEdit } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
 const Delivery = () => {
   var uid = LS.get("uid");
-  console.log(LS.get("data").type);
+  
   var a =
     LS.get("data").type == 1
       ? query(Orderdetails, where("uid", "==", uid), where("status", "==", 2))
@@ -49,7 +49,6 @@ const Delivery = () => {
   var a = seller.docs.map((docSnapshot) => {
     product.push({ ...docSnapshot.data(), id: docSnapshot.id });
   });
-  console.log(product);
 
   return (
     <div class="block w-[100%] overflow-hidden h-screen home pt-20">

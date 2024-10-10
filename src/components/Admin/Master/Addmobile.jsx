@@ -21,7 +21,6 @@ function Addmobile() {
   };
   const Getusers = async () => {
     const Data = await getDocs(Usercollectionred);
-    console.log(Data);
     Setuserdata(Data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
   useEffect(() => {

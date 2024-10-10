@@ -72,7 +72,6 @@ function Driver() {
             }
           });
           Setaction(verified);
-          console.log(Action);
           Setdata(ID);
           Setmetadata(meta);
           Setloading(false);
@@ -93,16 +92,13 @@ function Driver() {
     const docRef = doc(Db, "Transport", searchParams.get("id"));
     updateDoc(docRef, { verify: te })
       .then((docRef) => {
-        console.log("A New Document Field document");
         const docRef1 = doc(Db, "orderdetails", Innerdataid[Cindex]);
         const data = {
           Vstatus: true,
         };
         updateDoc(docRef1, data)
           .then((docRef) => {
-            console.log(
-              "A New Document Field has been added to an existing document"
-            );
+           
             setShowModal(false);
             Getdata();
             Setloading(false);

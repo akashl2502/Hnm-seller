@@ -42,7 +42,6 @@ function Transport() {
         const data = { ...docSnapshot.data(), id: docSnapshot.id };
         return data;
       });
-      console.log(a);
       Orderdata({ dataincome: a });
       Setloading(false);
     });
@@ -82,10 +81,8 @@ function Transport() {
       const docRef = doc(Db, "Transport", Dataid);
       updateDoc(docRef, { metadata: Transdet })
         .then((docRef) => {
-          console.log("A New Document Field document");
 
           Innerdataid.map((da) => {
-            console.log(da);
             const docRef = doc(Db, "orderdetails", da);
             const data = {
               VN: Transdet.VN,
@@ -93,9 +90,7 @@ function Transport() {
             };
             updateDoc(docRef, data)
               .then((docRef) => {
-                console.log(
-                  "A New Document Field has been added to an existing document"
-                );
+               
                 setShowModal(false);
                 Getdata();
                 Setloading(false);
@@ -247,7 +242,6 @@ function Transport() {
               did = td[d];
             }
           });
-          console.log(ID);
           return (
             <>
               <div className="flex flex-col justify-end items-end gap-5">

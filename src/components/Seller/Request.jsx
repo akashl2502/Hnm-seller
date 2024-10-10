@@ -55,7 +55,6 @@ function Request() {
     where("status", "==", 0)
   );
   useEffect(() => {
-    console.log("Request");
   }, []);
   const {
     data: seller,
@@ -105,7 +104,6 @@ function Request() {
   //   Setupdata(product);
   // };
   const uploadfile = (e) => {
-    console.log(e);
     toast.loading("Uploading File Please Wait ....", { id: toastid });
     try {
       var refimgid;
@@ -121,13 +119,11 @@ function Request() {
             alert(error);
           },
           () => {
-            console.log("ohh yeah inside");
             getDownloadURL(uploadTask.snapshot.ref)
               .then((downloadURL) => {
                 refimgid = downloadURL;
               })
               .then(async (res) => {
-                console.log("ohh yeah data");
                 var name = e.namef;
                 const docRef = doc(Db, "orderdetails", e.docid);
                 if (e.namef == "file1") {
@@ -339,7 +335,6 @@ function Request() {
     product.push({ ...docSnapshot.data(), id: docSnapshot.id });
   });
   var Req = Array.from({ length: product.length }, () => false);
-  console.log(Req);
   return (
     <div class="block w-[100%] pt-20 overflow-hidden home h-screen">
       <div className="mt-1 flex justify-between">
