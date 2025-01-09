@@ -1,136 +1,120 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { loadFull } from "tsparticles";
-import bcrypt from "bcryptjs";
-
+import React, { useState, useEffect } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
-import Tilt from "react-parallax-tilt";
-import { UilEnvelopeOpen } from "@iconscout/react-unicons";
-import { UilKeySkeleton } from "@iconscout/react-unicons";
 import { UilUserMd } from "@iconscout/react-unicons";
-import { UilBuilding } from "@iconscout/react-unicons";
-import { UilMobileAndroid } from "@iconscout/react-unicons";
-import "./Glassmorphism.css";
-import Particles from "react-tsparticles";
-import particlesconfig from "../../config.jsx";
-import { Db } from "../../Firebase/Firebase-Config";
-import { Authentication } from "../../Firebase/Firebase-Config";
+import { UilEye, UilEyeSlash } from "@iconscout/react-unicons"; // Add eye icon for visibility toggle
 import toast, { Toaster } from "react-hot-toast";
-import { FirebaseError } from "@firebase/util";
-import {
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  signOut,
-  updatePhoneNumber,
-} from "firebase/auth";
-import {
-  collection,
-  getDocs,
-  addDoc,
-  getDoc,
-  query,
-  where,
-} from "firebase/firestore";
-import { async } from "@firebase/util";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useFirestoreQuery } from "@react-query-firebase/firestore";
-import "../SIdebar/Loading.css";
-import {
-  adminref,
-  Masteruserdetails,
-  sellerref,
-} from "../../Serverquery/Firebaseref";
-import { Globaltoast, LS } from "../../constants/Reusedfunctopn";
-import * as BootstrapIcons from "react-icons/bs";
+import axios from "axios";
+import { signInWithCustomToken } from "firebase/auth";
+import { Authentication } from "../../Firebase/Firebase-Config";
+import { LS } from "../../constants/Reusedfunctopn";
+
 function Glassmorphismbox() {
-  useEffect(() => {
-  }, []);
-  const toastId = Globaltoast;
   const [userdata, Setuserdata] = useState({ cusid: null, password: null });
   const [Loading, Setloading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false); // State for password visibility
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    const toastId = toast.loading("Logging in...");
+
     try {
       Setloading(true);
-      const userQuery = query(
-        collection(Db, "user"),
-        where("cusid", "==", userdata.cusid)
+
+      const response = await axios.post(
+        `https://hopandmoveserver-production.up.railway.app/api/signin`,
+        {
+          cusid: userdata.cusid,
+          password: userdata.password,
+        }
       );
-      const querySnapshot = await getDocs(userQuery);
-      if (querySnapshot.empty) {
-        toast.error("User not found", { id: toastId });
-        Setloading(false);
 
-        return;
-      }
-      const userDoc = querySnapshot.docs[0];
-      const storedPassword = userDoc.data().password;
-      const uid = userDoc.data().uid;
-      const type = userDoc.data().type;
-      const cusid = userDoc.data().cusid;
+      const { customToken, uid, type, cusid } = response.data;
+      console.log(uid);
 
-      const isMatch = await bcrypt.compare(userdata.password, storedPassword);
-      if (!isMatch) {
-        toast.error("Incorrect password", { id: toastId });
-        Setloading(false);
+      signInWithCustomToken(Authentication, customToken)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          LS.save("customToken", customToken);
+          LS.save("uid", uid);
+          LS.save("LB", true);
+          LS.save("US", type);
+          LS.save("cusid", cusid);
 
-        return;
-      }
-      if (isMatch) {
-        LS.save("uid", uid);
-        LS.save("LB", true);
-        LS.save("US", type);
-        LS.save("cusid", cusid);
-        Setloading(false);
-        navigate({
-          pathname: "../newuser",
-          search: createSearchParams({
-            uid: uid,
-            type: type,
-            cusid: cusid,
-          }).toString(),
+          Setloading(false);
+
+          toast.success("Login successful", { id: toastId });
+
+          navigate({
+            pathname: "../newuser",
+            search: createSearchParams({
+              uid: uid,
+              type: type,
+              cusid: cusid,
+            }).toString(),
+          });
+        })
+        .catch((error) => {
+          Setloading(false);
+          toast.error("Firebase authentication failed: " + error.message, {
+            id: toastId,
+          });
         });
-        toast.success("Login successful", { id: toastId });
-      }
     } catch (error) {
-      console.error("Error during login:", error);
+      console.log(error?.response?.data?.response);
       Setloading(false);
-
-      toast.error("An error occurred during login", { id: toastId });
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message, { id: toastId });
+      } else {
+        toast.error("Something has happen. Please try again later", {
+          id: toastId,
+        });
+      }
     }
   };
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible); // Toggle the visibility of the password
+  };
+
   if (Loading) {
     return (
-      <div class="loader flex justify-center items-center h-screen">
-        <div data-glitch="Loading..." class="glitch">
+      <div className="loader flex justify-center items-center h-screen">
+        <div data-glitch="Loading..." className="glitch">
           Loading...
         </div>
       </div>
     );
   }
+
   return (
-    <div class="flex justify-center items-center">
-      <div class="row full-height justify-content-center">
-        <div class="col-12 text-center align-self-center py-5">
-          <div class="section pb-5  pt-sm-2 text-center">
-            <h6 class="mb-0 pb-3 text-white max-sm:mt-[2rem] ">
+    <div className="flex justify-center items-center">
+      <div className="row full-height justify-content-center">
+        <div className="col-12 text-center align-self-center py-5">
+          <div className="section pb-5 pt-sm-2 text-center">
+            <h6 className="mb-0 pb-3 text-white max-sm:mt-[2rem] ">
               <span className="text-xl font-bold tracking-widest ">Seller</span>
             </h6>
 
-            <label for="reg-log"></label>
-            <div class="card-3d-wrap mx-auto">
-              <div class="card-3d-wrapper">
-                <div class="card-front">
-                  <div class="center-wrap">
-                    <div class="section text-center">
+            <label htmlFor="reg-log"></label>
+            <div className="card-3d-wrap mx-auto">
+              <div className="card-3d-wrapper">
+                <div className="card-front">
+                  <div className="center-wrap">
+                    <div className="section text-center">
                       <form>
-                        <h4 class="mb-10 pb-3 text-white">Customer Login</h4>
-                        <div class="form-group">
+                        <h4 className="mb-10 pb-3 text-white">
+                          Customer Login
+                        </h4>
+                        <div className="form-group">
                           <input
                             name="customer_id"
-                            class="form-style mb-2"
+                            className="form-style mb-2"
                             placeholder="Id"
                             onChange={(e) => {
                               Setuserdata({
@@ -141,15 +125,15 @@ function Glassmorphismbox() {
                           />
                           <UilUserMd
                             size="25"
-                            class="input-icon"
+                            className="input-icon"
                             color="#ffeba7"
                           />
                         </div>
-                        <div class="form-group">
+                        <div className="form-group relative flex items-center">
                           <input
-                            type="password"
-                            class="form-style mb-2"
-                            placeholder="password"
+                            type={passwordVisible ? "text" : "password"} // Toggle input type
+                            className="form-style mb-2 w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Password"
                             onChange={(e) => {
                               Setuserdata({
                                 ...userdata,
@@ -159,15 +143,24 @@ function Glassmorphismbox() {
                           />
                           <UilUserMd
                             size="25"
-                            class="input-icon"
-                            color="#ffeba7"
+                            className="absolute left-3 top-2/4 -translate-y-2/4 text-yellow-400"
                           />
+                          <div
+                            className="absolute right-3 top-2/4 -translate-y-2/4 cursor-pointer text-gray-500 hover:text-gray-700"
+                            onClick={togglePasswordVisibility} // Toggle password visibility
+                          >
+                            {passwordVisible ? (
+                              <UilEyeSlash size="20" />
+                            ) : (
+                              <UilEye size="20" />
+                            )}
+                          </div>
                         </div>
 
                         <div>
                           <a
                             href="#"
-                            class="btn mt-7"
+                            className="btn mt-7"
                             onClick={(e) => {
                               handleLogin(e);
                             }}
@@ -179,7 +172,7 @@ function Glassmorphismbox() {
                     </div>
                   </div>
 
-                  <div class="card-back"></div>
+                  <div className="card-back"></div>
                 </div>
               </div>
             </div>

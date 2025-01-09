@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import bg from "../../assets/bbblurry.svg";
 import "./seller.css";
 import bcrypt from "bcryptjs";
+import { UilEye, UilEyeSlash } from "@iconscout/react-unicons"; // Add eye icon for visibility toggle
 
 import {
   useNavigate,
@@ -28,7 +29,6 @@ import {
 } from "firebase/firestore";
 import { RiLockPasswordFill } from "react-icons/ri";
 
-import { data } from "autoprefixer";
 import { Db } from "../../Firebase/Firebase-Config";
 function Newuser() {
   useEffect(() => {
@@ -61,6 +61,8 @@ function Newuser() {
   const [showmodel, setShowModal] = useState(true);
   const [Password, Setpassword] = useState("");
   const [confirmPassword, setconfirmpassword] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false); // For Password field
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false); // For Confirm Password field
 
   const [Newdata, Setnewdata] = useState({
     name: "",
@@ -173,71 +175,96 @@ function Newuser() {
         <div className="container">
           {showmodel ? (
             <>
-              <div className="justify-center  items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+              <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-[400px] my-6 mx-auto max-w-3xl">
-                  {/*content*/}
-                  <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                    {/*header*/}
-                    <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                      <h3 className="text-3xl font-semibold">
-                        Change password
+                  {/* Modal content */}
+                  <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gradient-to-br from-[#ff966d] via-[#fa538d] to-[#89379c] outline-none focus:outline-none">
+                    {/* Header */}
+                    <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
+                      <h3 className="text-2xl font-semibold text-white">
+                        Change Password
                       </h3>
-                      {/* <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button> */}
                     </div>
-                    {/*body*/}
-                    <div className="flex w-full  flex-col gap-10 p-8 justify-center items-start">
-                      <div className=" flex w-full flex-col gap-2">
-                        <div className="text-left flex gap-2 justify-start items-center">
-                          <label htmlFor="">Password</label>
-                          <RiLockPasswordFill />
-                        </div>
-                        <div className="w-full">
+
+                    {/* Body */}
+                    <div className="flex flex-col gap-6 p-6 bg-white rounded-b-lg">
+                      {/* Password Field */}
+                      <div className="flex flex-col gap-2">
+                        <label
+                          htmlFor="password"
+                          className="text-gray-700 font-medium"
+                        >
+                          Password
+                        </label>
+                        <div className="relative">
                           <input
-                            className="bg-gray-100 w-full border border-black rounded-md h-[2.3rem]"
-                            type="password"
+                            id="password"
+                            className="w-full px-4 py-2 text-gray-800 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#fa538d] focus:border-[#fa538d]"
+                            type={passwordVisible ? "text" : "password"}
+                            placeholder="Enter new password"
                             onChange={(e) => {
                               Setpassword(e.target.value);
                             }}
                           />
+                          {/* Eye Icon */}
+                          <div
+                            className="absolute inset-y-0 right-3 flex items-center text-gray-500 cursor-pointer hover:text-gray-700"
+                            onClick={() => setPasswordVisible(!passwordVisible)}
+                          >
+                            {passwordVisible ? (
+                              <UilEyeSlash size="20" />
+                            ) : (
+                              <UilEye size="20" />
+                            )}
+                          </div>
                         </div>
                       </div>
-                      <div className=" flex w-full flex-col gap-2">
-                        <div className="text-left flex gap-2 justify-start items-center">
-                          <label htmlFor="">Confirm Password</label>
-                          <RiLockPasswordFill />
-                        </div>
-                        <div className="w-full">
+
+                      {/* Confirm Password Field */}
+                      <div className="flex flex-col gap-2">
+                        <label
+                          htmlFor="confirm-password"
+                          className="text-gray-700 font-medium"
+                        >
+                          Confirm Password
+                        </label>
+                        <div className="relative">
                           <input
-                            className="bg-gray-100 w-full border border-black rounded-md h-[2.3rem]"
-                            type="password"
+                            id="confirm-password"
+                            className="w-full px-4 py-2 text-gray-800 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#fa538d] focus:border-[#fa538d]"
+                            type={confirmPasswordVisible ? "text" : "password"}
+                            placeholder="Confirm password"
                             onChange={(e) => {
                               setconfirmpassword(e.target.value);
                             }}
                           />
+                          {/* Eye Icon */}
+                          <div
+                            className="absolute inset-y-0 right-3 flex items-center text-gray-500 cursor-pointer hover:text-gray-700"
+                            onClick={() =>
+                              setConfirmPasswordVisible(!confirmPasswordVisible)
+                            }
+                          >
+                            {confirmPasswordVisible ? (
+                              <UilEyeSlash size="20" />
+                            ) : (
+                              <UilEye size="20" />
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
-                    {/*footer*/}
-                    <div className="flex items-center justify-end p-3 border-t border-solid border-slate-200 rounded-b">
-                      {/* <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => {
-                      setShowModal(false)
-                    }}
-                  >
-                    Close
-                  </button> */}
+
+                    {/* Footer */}
+                    <div className="flex items-center justify-end gap-4 p-4 border-t border-solid border-gray-300">
                       <button
-                        className="text-emerald-500  active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded  hover: outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        type="button"
+                        className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none"
+                        onClick={() => setShowModal(false)}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        className="px-4 py-2 text-sm font-medium text-white bg-[#fa538d] rounded-md shadow-sm hover:bg-[#89379c] focus:outline-none focus:ring-2 focus:ring-[#fa538d] focus:ring-offset-2"
                         onClick={async () => {
                           if (Password === confirmPassword) {
                             if (!validatePassword(Password)) {
@@ -255,16 +282,17 @@ function Newuser() {
                           }
                         }}
                       >
-                        Add
+                        Save
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
             </>
           ) : null}
-          <div class="design">
+          <div className="design">
             <div className="pill-1 rotate-45"></div>
             <div className="pill-2 rotate-45"></div>
             <div className="pill-3 rotate-45"></div>
@@ -379,8 +407,8 @@ function Newuser() {
         </div>
       ) : (
         <>
-          <div class="loader flex justify-center items-center h-screen">
-            <div data-glitch="Loading..." class="glitch">
+          <div className="loader flex justify-center items-center h-screen">
+            <div data-glitch="Loading..." className="glitch">
               Loading...
             </div>
           </div>

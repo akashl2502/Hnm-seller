@@ -98,7 +98,6 @@ function Driver() {
         };
         updateDoc(docRef1, data)
           .then((docRef) => {
-           
             setShowModal(false);
             Getdata();
             Setloading(false);
@@ -123,8 +122,8 @@ function Driver() {
   }, []);
   if (isloading) {
     return (
-      <div class="loader flex justify-center items-center h-screen">
-        <div data-glitch="Loading..." class="glitch">
+      <div className="loader flex justify-center items-center h-screen">
+        <div data-glitch="Loading..." className="glitch">
           Loading...
         </div>
       </div>
@@ -136,15 +135,15 @@ function Driver() {
 
   if (isloading) {
     return (
-      <div class="loader flex justify-center items-center h-screen">
-        <div data-glitch="Loading..." class="glitch">
+      <div className="loader flex justify-center items-center h-screen">
+        <div data-glitch="Loading..." className="glitch">
           Loading...
         </div>
       </div>
     );
   }
   return (
-    <div class="block w-[100%] overflow-hidden h-screen home pt-20">
+    <div className="block w-[100%] overflow-hidden h-screen home pt-20">
       {showModal ? (
         <>
           <div className="justify-center  items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -167,7 +166,9 @@ function Driver() {
                 </div>
                 {/*body*/}
                 <div className="flex w-full  flex-col gap-10 p-8 justify-center items-start">
-                  <h3 className="">Are you sure to change status to be verified</h3>
+                  <h3 className="">
+                    Are you sure to change status to be verified
+                  </h3>
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
@@ -201,32 +202,32 @@ function Driver() {
       </div>
       <div className="table-container  px-10 w-[97%] h-full mt-10 max-xs:px-4 max-ss:px-6 max-sm:px-8">
         <div className="flex flex-col justify-end items-end gap-5">
-          <table class="items-center mt-5 bg-transparent w-full border-collapse  ">
+          <table className="items-center mt-5 bg-transparent w-full border-collapse  ">
             <thead className="bg-gray-800 text-white">
               <tr>
-                <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                   Serial.No
                 </th>
-                <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                   Address
                 </th>
 
-                <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                   Number
                 </th>
-                <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                   Vehicle number
                 </th>
-                <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                   Driver Number
                 </th>
-                <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                   Verified
                 </th>
-                <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                   Action
                 </th>
-                {/* <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                {/* <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
               Action
             </th> */}
               </tr>
@@ -236,29 +237,29 @@ function Driver() {
               {Data.map((inside, index) => {
                 return (
                   <tr key={index}>
-                    <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    <td className="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                       {index + 1}
                     </td>
-                    <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    <td className="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                       {`${inside.city}, ${inside.region}, ${inside.pincode}`}
                     </td>
-                    <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    <td className="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                       {inside.Number}
                     </td>
-                    <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    <td className="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                       {metadata[0]
                         ? metadata[0]
                         : "Vehicle number needed to be added"}
                     </td>
-                    <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    <td className="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                       {metadata[1]
                         ? metadata[1]
                         : "Driver number needed to be added"}
                     </td>
-                    <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    <td className="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                       {Action[index] == 1 ? "Verified" : "Not Verified"}
                     </td>{" "}
-                    <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                    <td className="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
                       <button>
                         {Action[index] == 1 ? (
                           <TiTick size={20} color="green" onClick={(e) => {}} />

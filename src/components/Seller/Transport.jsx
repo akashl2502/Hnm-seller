@@ -64,12 +64,13 @@ function Transport() {
     Setdata(notok);
   };
   useEffect(() => {
+    console.log();
     Getdata();
   }, []);
   if (isloading) {
     return (
-      <div class="loader flex justify-center items-center h-screen">
-        <div data-glitch="Loading..." class="glitch">
+      <div className="loader flex justify-center items-center h-screen">
+        <div data-glitch="Loading..." className="glitch">
           Loading...
         </div>
       </div>
@@ -77,47 +78,54 @@ function Transport() {
   }
   const Processdata = () => {
     Setloading(true);
-    if (Transdet.DN.length == 10 && Transdet.VN.length != 0) {
+
+    if (Transdet.DN?.length === 10 && Transdet.VN?.trim().length > 0) {
       const docRef = doc(Db, "Transport", Dataid);
+
       updateDoc(docRef, { metadata: Transdet })
-        .then((docRef) => {
-
-          Innerdataid.map((da) => {
-            const docRef = doc(Db, "orderdetails", da);
-            const data = {
-              VN: Transdet.VN,
-              DN: Transdet.DN,
-            };
-            updateDoc(docRef, data)
-              .then((docRef) => {
-               
-                setShowModal(false);
-                Getdata();
-                Setloading(false);
-              })
-              .catch((error) => {
-                Setloading(false);
-                setShowModal(false);
-
-                console.log(error);
+        .then(() => {
+          Promise.all(
+            Innerdataid.map((da) => {
+              const orderDocRef = doc(Db, "orderdetails", da);
+              const data = {
+                VN: Transdet.VN,
+                DN: Transdet.DN,
+                status: 2,
+              };
+              return updateDoc(orderDocRef, data);
+            })
+          )
+            .then(() => {
+              setShowModal(false);
+              Getdata();
+              Setloading(false);
+              toast.success("Transport data successfully updated", {
+                id: toastid,
               });
-          });
-          toast.success("Transport data Successfully updated", { id: toastid });
+            })
+            .catch((error) => {
+              console.error("Error updating order details:", error);
+              Setloading(false);
+              setShowModal(false);
+              toast.error("Error updating order details", { id: toastid });
+            });
         })
         .catch((error) => {
+          console.error("Error updating transport metadata:", error);
           Setloading(false);
           setShowModal(false);
-
-          console.log(error);
+          toast.error("Error updating transport metadata", { id: toastid });
         });
     } else {
-      toast.error("Fill all the details", { id: toastid });
+      Setloading(false);
+      toast.error("Please fill all the details correctly", { id: toastid });
     }
   };
+
   if (isloading) {
     return (
-      <div class="loader flex justify-center items-center h-screen">
-        <div data-glitch="Loading..." class="glitch">
+      <div className="loader flex justify-center items-center h-screen">
+        <div data-glitch="Loading..." className="glitch">
           Loading...
         </div>
       </div>
@@ -132,7 +140,7 @@ function Transport() {
     textField.remove();
   };
   return (
-    <div class="block w-[100%] overflow-hidden h-screen home pt-20">
+    <div className="block w-[100%] overflow-hidden h-screen home pt-20">
       {showModal ? (
         <>
           <div className="justify-center  items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -238,6 +246,7 @@ function Transport() {
             } else if (d == "metadata") {
               metadata.push(td[d].VN);
               metadata.push(td[d].DN);
+              metadata.push(td[d].doc);
             } else if (d == "id") {
               did = td[d];
             }
@@ -245,29 +254,29 @@ function Transport() {
           return (
             <>
               <div className="flex flex-col justify-end items-end gap-5">
-                <table class="items-center mt-5 bg-transparent w-full border-collapse  ">
-                  <thead className="bg-gray-800 text-white">
+                <table className="items-center mt-5 bg-transparent w-full border-collapse  ">
+                  <thead className="bg-gray-800 text-white font-poppins ">
                     <tr>
-                      <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Serial.No
+                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                        Date
                       </th>
-                      <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                         Address
                       </th>
 
-                      <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                         Number
                       </th>
-                      <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                         Vehicle number
                       </th>
-                      <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                         Driver Number
                       </th>
-                      <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                         link
                       </th>
-                      {/* <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      {/* <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
               Action
             </th> */}
                     </tr>
@@ -276,27 +285,27 @@ function Transport() {
                   <tbody>
                     {ID.map((inside, index) => {
                       return (
-                        <tr key={index}>
-                          <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                            {index + 1}
+                        <tr key={index} className="font-poppins">
+                          <td className=" border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                            {metadata[2]}
                           </td>
-                          <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                            {`${inside.city}, ${inside.region}, ${inside.pincode}`}
+                          <td className="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                            {`${inside.city}`}
                           </td>
-                          <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                          <td className="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left text-blueGray-700 ">
                             {inside.Number}
                           </td>
-                          <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                          <td className="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left text-blueGray-700 ">
                             {metadata[0]
                               ? metadata[0]
                               : "Vehicle number needed to be added"}
                           </td>
-                          <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                          <td className="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left text-blueGray-700 ">
                             {metadata[1]
                               ? metadata[1]
                               : "Driver number needed to be added"}
                           </td>
-                          <td class="border-t-0 px-6 bg-gray-300 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                          <td className="border-t-0 px-6 cursor-pointer bg-gray-300 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left text-blueGray-700 ">
                             <MdContentCopy
                               onClick={(e) => {
                                 const url = `${websitelink}/driver?id=${td.id}`;
